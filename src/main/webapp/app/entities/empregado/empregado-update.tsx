@@ -137,7 +137,7 @@ export const EmpregadoUpdate = (props: IEmpregadoUpdateProps) => {
                   {lotacaos
                     ? lotacaos.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.nome}
                         </option>
                       ))
                     : null}
@@ -159,7 +159,7 @@ export const EmpregadoUpdate = (props: IEmpregadoUpdateProps) => {
                   {competencias
                     ? competencias.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.nome}
                         </option>
                       ))
                     : null}
@@ -181,7 +181,7 @@ export const EmpregadoUpdate = (props: IEmpregadoUpdateProps) => {
                   {projetos
                     ? projetos.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.nome}
                         </option>
                       ))
                     : null}

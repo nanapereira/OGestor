@@ -116,7 +116,7 @@ export const CompetenciaUpdate = (props: ICompetenciaUpdateProps) => {
                   {empregados
                     ? empregados.map(otherEntity => (
                         <option value={otherEntity.id} key={otherEntity.id}>
-                          {otherEntity.id}
+                          {otherEntity.nome}
                         </option>
                       ))
                     : null}

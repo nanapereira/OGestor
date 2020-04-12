@@ -1,0 +1,32 @@
+{
+  "oGestorApp": {
+    "empregado": {
+      "home": {
+        "title": "Empregados",
+        "createLabel": "Criar novo Empregado",
+        "createOrEditLabel": "Criar ou editar Empregado",
+        "notFound": "Nenhum Empregado encontrado"
+      },
+      "created": "Um novo Empregado foi criado com o identificador {{ param }}",
+      "updated": "Um Empregado foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Empregado foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Empregado {{ id }}?"
+      },
+      "detail": {
+        "title": "Empregado"
+      },
+      "matricula": "Matricula",
+      "nome": "Nome",
+      "cpf": "Cpf",
+      "email": "Email",
+      "telefone": "Telefone",
+      "ramal": "Ramal",
+      "lotacao": "Lotacao",
+      "competencias": "Competencias",
+      "projetos": "Projetos",
+      "listaCompetencias": "Lista Competencias",
+      "listaProjetos": "Lista Projetos"
+    }
+  }
+}

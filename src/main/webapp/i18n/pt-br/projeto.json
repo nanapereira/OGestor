@@ -1,0 +1,28 @@
+{
+  "oGestorApp": {
+    "projeto": {
+      "home": {
+        "title": "Projetos",
+        "createLabel": "Criar novo Projeto",
+        "createOrEditLabel": "Criar ou editar Projeto",
+        "notFound": "Nenhum Projeto encontrado"
+      },
+      "created": "Um novo Projeto foi criado com o identificador {{ param }}",
+      "updated": "Um Projeto foi atualizado com o identificador {{ param }}",
+      "deleted": "Um Projeto foi excluído com o identificador {{ param }}",
+      "delete": {
+        "question": "Tem certeza de que deseja excluir Projeto {{ id }}?"
+      },
+      "detail": {
+        "title": "Projeto"
+      },
+      "nome": "Nome",
+      "descricao": "Descricao",
+      "dataInicio": "Data Inicio",
+      "dataFim": "Data Fim",
+      "gestor": "Gestor",
+      "empregados": "Empregados",
+      "listaempregado": "Listaempregado"
+    }
+  }
+}

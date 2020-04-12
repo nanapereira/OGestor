@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.8.xsd">
+    <!--
+        Added the constraints for entity Empregado.
+    -->
+    <changeSet id="20200412162600-2" author="jhipster">
+        
+        <addForeignKeyConstraint baseColumnNames="lotacao_id"
+                                 baseTableName="empregado"
+                                 constraintName="fk_empregado_lotacao_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="lotacao"/>
+
+        <addForeignKeyConstraint baseColumnNames="empregado_id"
+                                 baseTableName="empregado_competencias"
+                                 constraintName="fk_empregado_competencias_empregado_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="empregado"/>
+
+        <addForeignKeyConstraint baseColumnNames="competencias_id"
+                                 baseTableName="empregado_competencias"
+                                 constraintName="fk_empregado_competencias_competencias_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="competencia"/>
+        
+        <addForeignKeyConstraint baseColumnNames="empregado_id"
+                                 baseTableName="empregado_projetos"
+                                 constraintName="fk_empregado_projetos_empregado_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="empregado"/>
+
+        <addForeignKeyConstraint baseColumnNames="projetos_id"
+                                 baseTableName="empregado_projetos"
+                                 constraintName="fk_empregado_projetos_projetos_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="projeto"/>
+        
+    </changeSet>
+</databaseChangeLog>

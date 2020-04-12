@@ -1,0 +1,42 @@
+{
+    "name": "Ausencia",
+    "fields": [
+        {
+            "fieldName": "tipo",
+            "fieldType": "TipoAusencia",
+            "fieldValues": "ABONO,FERIAS,LICENCA,OUTROS"
+        },
+        {
+            "fieldName": "descricao",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dataInicio",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "dataFim",
+            "fieldType": "String"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "otherEntityName": "empregado",
+            "otherEntityRelationshipName": "ausencia",
+            "relationshipName": "empregado",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20200412163000",
+    "entityTableName": "ausencia",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "readOnly": false,
+    "embedded": false,
+    "clientRootFolder": "",
+    "applications": "*"
+}

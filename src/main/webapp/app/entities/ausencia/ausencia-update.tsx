@@ -107,13 +107,13 @@ export const AusenciaUpdate = (props: IAusenciaUpdateProps) => {
                 <Label id="dataInicioLabel" for="ausencia-dataInicio">
                   <Translate contentKey="oGestorApp.ausencia.dataInicio">Data Inicio</Translate>
                 </Label>
-                <AvField id="ausencia-dataInicio" type="text" name="dataInicio" />
+                <AvField id="ausencia-dataInicio" type="date" name="dataInicio" />
               </AvGroup>
               <AvGroup>
                 <Label id="dataFimLabel" for="ausencia-dataFim">
                   <Translate contentKey="oGestorApp.ausencia.dataFim">Data Fim</Translate>
                 </Label>
-                <AvField id="ausencia-dataFim" type="text" name="dataFim" />
+                <AvField id="ausencia-dataFim" type="date" name="dataFim" />
               </AvGroup>
               <AvGroup>
                 <Label for="ausencia-empregado">

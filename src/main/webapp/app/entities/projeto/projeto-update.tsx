@@ -99,13 +99,13 @@ export const ProjetoUpdate = (props: IProjetoUpdateProps) => {
                 <Label id="dataInicioLabel" for="projeto-dataInicio">
                   <Translate contentKey="oGestorApp.projeto.dataInicio">Data Inicio</Translate>
                 </Label>
-                <AvField id="projeto-dataInicio" type="text" name="dataInicio" />
+                <AvField id="projeto-dataInicio" type="date" name="dataInicio" />
               </AvGroup>
               <AvGroup>
                 <Label id="dataFimLabel" for="projeto-dataFim">
                   <Translate contentKey="oGestorApp.projeto.dataFim">Data Fim</Translate>
                 </Label>
-                <AvField id="projeto-dataFim" type="text" name="dataFim" />
+                <AvField id="projeto-dataFim" type="date" name="dataFim" />
               </AvGroup>
               <AvGroup>
                 <Label for="projeto-gestor">

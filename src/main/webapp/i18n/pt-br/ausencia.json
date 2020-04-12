@@ -2,23 +2,23 @@
   "oGestorApp": {
     "ausencia": {
       "home": {
-        "title": "Ausencias",
-        "createLabel": "Criar novo Ausencia",
-        "createOrEditLabel": "Criar ou editar Ausencia",
-        "notFound": "Nenhum Ausencia encontrado"
+        "title": "Ausências",
+        "createLabel": "Criar nova Ausência",
+        "createOrEditLabel": "Criar ou editar Ausência",
+        "notFound": "Nenhuma Ausência encontrada"
       },
-      "created": "Um novo Ausencia foi criado com o identificador {{ param }}",
-      "updated": "Um Ausencia foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Ausencia foi excluído com o identificador {{ param }}",
+      "created": "Uma nova Ausência foi criada com o identificador {{ param }}",
+      "updated": "Uma Ausência foi atualizada com o identificador {{ param }}",
+      "deleted": "Uma Ausência foi excluída com o identificador {{ param }}",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Ausencia {{ id }}?"
+        "question": "Tem certeza de que deseja excluir Ausência {{ id }}?"
       },
       "detail": {
-        "title": "Ausencia"
+        "title": "Ausência"
       },
       "tipo": "Tipo",
-      "descricao": "Descricao",
-      "dataInicio": "Data Inicio",
+      "descricao": "Descrição",
+      "dataInicio": "Data Início",
       "dataFim": "Data Fim",
       "empregado": "Empregado"
     }

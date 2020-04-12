@@ -2,23 +2,23 @@
   "oGestorApp": {
     "competencia": {
       "home": {
-        "title": "Competencias",
-        "createLabel": "Criar novo Competencia",
-        "createOrEditLabel": "Criar ou editar Competencia",
-        "notFound": "Nenhum Competencia encontrado"
+        "title": "Competências",
+        "createLabel": "Criar nova Competência",
+        "createOrEditLabel": "Criar ou editar Competência",
+        "notFound": "Nenhuma Competência encontrada"
       },
-      "created": "Um novo Competencia foi criado com o identificador {{ param }}",
-      "updated": "Um Competencia foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Competencia foi excluído com o identificador {{ param }}",
+      "created": "Uma nova Competência foi criada com o identificador {{ param }}",
+      "updated": "Uma Competência foi atualizada com o identificador {{ param }}",
+      "deleted": "Uma Competência foi excluída com o identificador {{ param }}",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Competencia {{ id }}?"
+        "question": "Tem certeza de que deseja excluir Competência {{ id }}?"
       },
       "detail": {
-        "title": "Competencia"
+        "title": "Competência"
       },
-      "codigo": "Codigo",
+      "codigo": "Código",
       "nome": "Nome",
-      "descricao": "Descricao",
+      "descricao": "Descrição",
       "empregados": "Empregados",
       "listaEmpregados": "Lista Empregados"
     }

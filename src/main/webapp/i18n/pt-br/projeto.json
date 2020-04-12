@@ -17,8 +17,8 @@
         "title": "Projeto"
       },
       "nome": "Nome",
-      "descricao": "Descricao",
-      "dataInicio": "Data Inicio",
+      "descricao": "Descrição",
+      "dataInicio": "Data Início",
       "dataFim": "Data Fim",
       "gestor": "Gestor",
       "empregados": "Empregados",

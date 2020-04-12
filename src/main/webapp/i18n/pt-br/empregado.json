@@ -16,16 +16,16 @@
       "detail": {
         "title": "Empregado"
       },
-      "matricula": "Matricula",
+      "matricula": "Matrícula",
       "nome": "Nome",
-      "cpf": "Cpf",
-      "email": "Email",
+      "cpf": "CPF",
+      "email": "E-mail",
       "telefone": "Telefone",
       "ramal": "Ramal",
-      "lotacao": "Lotacao",
-      "competencias": "Competencias",
+      "lotacao": "Lotação",
+      "competencias": "Competências",
       "projetos": "Projetos",
-      "listaCompetencias": "Lista Competencias",
+      "listaCompetencias": "Lista Competências",
       "listaProjetos": "Lista Projetos"
     }
   }

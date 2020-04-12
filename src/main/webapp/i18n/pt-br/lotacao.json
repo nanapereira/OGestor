@@ -2,23 +2,23 @@
   "oGestorApp": {
     "lotacao": {
       "home": {
-        "title": "Lotacaos",
-        "createLabel": "Criar novo Lotacao",
-        "createOrEditLabel": "Criar ou editar Lotacao",
-        "notFound": "Nenhum Lotacao encontrado"
+        "title": "Lotações",
+        "createLabel": "Criar nova Lotação",
+        "createOrEditLabel": "Criar ou editar Lotação",
+        "notFound": "Nenhuma Lotação encontrada"
       },
-      "created": "Um novo Lotacao foi criado com o identificador {{ param }}",
-      "updated": "Um Lotacao foi atualizado com o identificador {{ param }}",
-      "deleted": "Um Lotacao foi excluído com o identificador {{ param }}",
+      "created": "Uma nova Lotação foi criada com o identificador {{ param }}",
+      "updated": "Uma Lotação foi atualizada com o identificador {{ param }}",
+      "deleted": "Uma Lotação foi excluída com o identificador {{ param }}",
       "delete": {
-        "question": "Tem certeza de que deseja excluir Lotacao {{ id }}?"
+        "question": "Tem certeza de que deseja excluir Lotação {{ id }}?"
       },
       "detail": {
-        "title": "Lotacao"
+        "title": "Lotação"
       },
-      "codigo": "Codigo",
+      "codigo": "Código",
       "nome": "Nome",
-      "descricao": "Descricao"
+      "descricao": "Descrição"
     }
   }
 }

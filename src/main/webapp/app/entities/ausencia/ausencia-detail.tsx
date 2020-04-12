@@ -22,7 +22,7 @@ export const AusenciaDetail = (props: IAusenciaDetailProps) => {
     <Row>
       <Col md="8">
         <h2>
-          <Translate contentKey="oGestorApp.ausencia.detail.title">Ausencia</Translate> [<b>{ausenciaEntity.id}</b>]
+          <Translate contentKey="oGestorApp.ausencia.detail.title">Ausencia</Translate> <b>{ausenciaEntity.id}</b>
         </h2>
         <dl className="jh-entity-details">
           <dt>
@@ -52,7 +52,7 @@ export const AusenciaDetail = (props: IAusenciaDetailProps) => {
           <dt>
             <Translate contentKey="oGestorApp.ausencia.empregado">Empregado</Translate>
           </dt>
-          <dd>{ausenciaEntity.empregado ? ausenciaEntity.empregado.id : ''}</dd>
+          <dd>{ausenciaEntity.empregado ? ausenciaEntity.empregado.nome : ''}</dd>
         </dl>
         <Button tag={Link} to="/ausencia" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

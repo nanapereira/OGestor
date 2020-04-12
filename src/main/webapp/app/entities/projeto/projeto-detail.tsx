@@ -22,7 +22,7 @@ export const ProjetoDetail = (props: IProjetoDetailProps) => {
     <Row>
       <Col md="8">
         <h2>
-          <Translate contentKey="oGestorApp.projeto.detail.title">Projeto</Translate> [<b>{projetoEntity.id}</b>]
+          <Translate contentKey="oGestorApp.projeto.detail.title">Projeto</Translate> <b>{projetoEntity.id}</b>
         </h2>
         <dl className="jh-entity-details">
           <dt>
@@ -52,7 +52,7 @@ export const ProjetoDetail = (props: IProjetoDetailProps) => {
           <dt>
             <Translate contentKey="oGestorApp.projeto.gestor">Gestor</Translate>
           </dt>
-          <dd>{projetoEntity.gestor ? projetoEntity.gestor.id : ''}</dd>
+          <dd>{projetoEntity.gestor ? projetoEntity.gestor.nome : ''}</dd>
           <dt>
             <Translate contentKey="oGestorApp.projeto.empregados">Empregados</Translate>
           </dt>
@@ -60,7 +60,7 @@ export const ProjetoDetail = (props: IProjetoDetailProps) => {
             {projetoEntity.empregados
               ? projetoEntity.empregados.map((val, i) => (
                   <span key={val.id}>
-                    <a>{val.id}</a>
+                    <a>{val.nome}</a>
                     {i === projetoEntity.empregados.length - 1 ? '' : ', '}
                   </span>
                 ))

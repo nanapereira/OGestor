@@ -22,7 +22,7 @@ export const LotacaoDetail = (props: ILotacaoDetailProps) => {
     <Row>
       <Col md="8">
         <h2>
-          <Translate contentKey="oGestorApp.lotacao.detail.title">Lotacao</Translate> [<b>{lotacaoEntity.id}</b>]
+          <Translate contentKey="oGestorApp.lotacao.detail.title">Lotacao</Translate> <b>{lotacaoEntity.id}</b>
         </h2>
         <dl className="jh-entity-details">
           <dt>

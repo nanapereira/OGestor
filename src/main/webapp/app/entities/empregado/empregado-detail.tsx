@@ -22,7 +22,7 @@ export const EmpregadoDetail = (props: IEmpregadoDetailProps) => {
     <Row>
       <Col md="8">
         <h2>
-          <Translate contentKey="oGestorApp.empregado.detail.title">Empregado</Translate> [<b>{empregadoEntity.id}</b>]
+          <Translate contentKey="oGestorApp.empregado.detail.title">Empregado</Translate> <b>{empregadoEntity.id}</b>
         </h2>
         <dl className="jh-entity-details">
           <dt>
@@ -64,7 +64,7 @@ export const EmpregadoDetail = (props: IEmpregadoDetailProps) => {
           <dt>
             <Translate contentKey="oGestorApp.empregado.lotacao">Lotacao</Translate>
           </dt>
-          <dd>{empregadoEntity.lotacao ? empregadoEntity.lotacao.id : ''}</dd>
+          <dd>{empregadoEntity.lotacao ? empregadoEntity.lotacao.nome : ''}</dd>
           <dt>
             <Translate contentKey="oGestorApp.empregado.competencias">Competencias</Translate>
           </dt>
@@ -72,7 +72,7 @@ export const EmpregadoDetail = (props: IEmpregadoDetailProps) => {
             {empregadoEntity.competencias
               ? empregadoEntity.competencias.map((val, i) => (
                   <span key={val.id}>
-                    <a>{val.id}</a>
+                    <a>{val.nome}</a>
                     {i === empregadoEntity.competencias.length - 1 ? '' : ', '}
                   </span>
                 ))
@@ -85,7 +85,7 @@ export const EmpregadoDetail = (props: IEmpregadoDetailProps) => {
             {empregadoEntity.projetos
               ? empregadoEntity.projetos.map((val, i) => (
                   <span key={val.id}>
-                    <a>{val.id}</a>
+                    <a>{val.nome}</a>
                     {i === empregadoEntity.projetos.length - 1 ? '' : ', '}
                   </span>
                 ))

@@ -22,7 +22,7 @@ export const CompetenciaDetail = (props: ICompetenciaDetailProps) => {
     <Row>
       <Col md="8">
         <h2>
-          <Translate contentKey="oGestorApp.competencia.detail.title">Competencia</Translate> [<b>{competenciaEntity.id}</b>]
+          <Translate contentKey="oGestorApp.competencia.detail.title">Competencia</Translate> <b>{competenciaEntity.id}</b>
         </h2>
         <dl className="jh-entity-details">
           <dt>
@@ -50,7 +50,7 @@ export const CompetenciaDetail = (props: ICompetenciaDetailProps) => {
             {competenciaEntity.empregados
               ? competenciaEntity.empregados.map((val, i) => (
                   <span key={val.id}>
-                    <a>{val.id}</a>
+                    <a>{val.nome}</a>
                     {i === competenciaEntity.empregados.length - 1 ? '' : ', '}
                   </span>
                 ))

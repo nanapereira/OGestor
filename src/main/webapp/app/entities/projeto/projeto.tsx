@@ -69,12 +69,12 @@ export const Projeto = (props: IProjetoProps) => {
                   <td>{projeto.descricao}</td>
                   <td>{projeto.dataInicio}</td>
                   <td>{projeto.dataFim}</td>
-                  <td>{projeto.gestor ? <Link to={`empregado/${projeto.gestor.id}`}>{projeto.gestor.id}</Link> : ''}</td>
+                  <td>{projeto.gestor ? <Link to={`empregado/${projeto.gestor.id}`}>{projeto.gestor.nome}</Link> : ''}</td>
                   <td>
                     {projeto.empregados
                       ? projeto.empregados.map((val, j) => (
                           <span key={j}>
-                            <Link to={`empregado/${val.id}`}>{val.id}</Link>
+                            <Link to={`empregado/${val.id}`}>{val.nome}</Link>
                             {j === projeto.empregados.length - 1 ? '' : ', '}
                           </span>
                         ))

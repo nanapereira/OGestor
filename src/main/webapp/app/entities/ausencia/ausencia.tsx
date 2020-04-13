@@ -68,7 +68,7 @@ export const Ausencia = (props: IAusenciaProps) => {
                   <td>{ausencia.descricao}</td>
                   <td>{ausencia.dataInicio}</td>
                   <td>{ausencia.dataFim}</td>
-                  <td>{ausencia.empregado ? <Link to={`empregado/${ausencia.empregado.id}`}>{ausencia.empregado.id}</Link> : ''}</td>
+                  <td>{ausencia.empregado ? <Link to={`empregado/${ausencia.empregado.id}`}>{ausencia.empregado.nome}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${ausencia.id}`} color="info" size="sm">

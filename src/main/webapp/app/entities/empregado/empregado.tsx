@@ -80,12 +80,12 @@ export const Empregado = (props: IEmpregadoProps) => {
                   <td>{empregado.email}</td>
                   <td>{empregado.telefone}</td>
                   <td>{empregado.ramal}</td>
-                  <td>{empregado.lotacao ? <Link to={`lotacao/${empregado.lotacao.id}`}>{empregado.lotacao.id}</Link> : ''}</td>
+                  <td>{empregado.lotacao ? <Link to={`lotacao/${empregado.lotacao.id}`}>{empregado.lotacao.nome}</Link> : ''}</td>
                   <td>
                     {empregado.competencias
                       ? empregado.competencias.map((val, j) => (
                           <span key={j}>
-                            <Link to={`competencia/${val.id}`}>{val.id}</Link>
+                            <Link to={`competencia/${val.id}`}>{val.nome}</Link>
                             {j === empregado.competencias.length - 1 ? '' : ', '}
                           </span>
                         ))
@@ -95,7 +95,7 @@ export const Empregado = (props: IEmpregadoProps) => {
                     {empregado.projetos
                       ? empregado.projetos.map((val, j) => (
                           <span key={j}>
-                            <Link to={`projeto/${val.id}`}>{val.id}</Link>
+                            <Link to={`projeto/${val.id}`}>{val.nome}</Link>
                             {j === empregado.projetos.length - 1 ? '' : ', '}
                           </span>
                         ))

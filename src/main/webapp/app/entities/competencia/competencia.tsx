@@ -66,7 +66,7 @@ export const Competencia = (props: ICompetenciaProps) => {
                     {competencia.empregados
                       ? competencia.empregados.map((val, j) => (
                           <span key={j}>
-                            <Link to={`empregado/${val.id}`}>{val.id}</Link>
+                            <Link to={`empregado/${val.id}`}>{val.nome}</Link>
                             {j === competencia.empregados.length - 1 ? '' : ', '}
                           </span>
                         ))

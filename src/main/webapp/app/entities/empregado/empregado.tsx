@@ -70,7 +70,7 @@ export const Empregado = (props: IEmpregadoProps) => {
               {empregadoList.map((empregado, i) => (
                 <tr key={`entity-${i}`}>
                   <td>
-                    <Button tag={Link} to={`${match.url}/${empregado.id}`} color="link" size="sm">
+                    <Button hidden="true" tag={Link} to={`${match.url}/${empregado.id}`} color="link" size="sm">
                       {empregado.id}
                     </Button>
                   </td>

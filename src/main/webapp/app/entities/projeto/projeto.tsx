@@ -61,7 +61,7 @@ export const Projeto = (props: IProjetoProps) => {
               {projetoList.map((projeto, i) => (
                 <tr key={`entity-${i}`}>
                   <td>
-                    <Button tag={Link} to={`${match.url}/${projeto.id}`} color="link" size="sm">
+                    <Button hidden="true" tag={Link} to={`${match.url}/${projeto.id}`} color="link" size="sm">
                       {projeto.id}
                     </Button>
                   </td>

@@ -58,7 +58,7 @@ export const Ausencia = (props: IAusenciaProps) => {
               {ausenciaList.map((ausencia, i) => (
                 <tr key={`entity-${i}`}>
                   <td>
-                    <Button tag={Link} to={`${match.url}/${ausencia.id}`} color="link" size="sm">
+                    <Button hidden="true" tag={Link} to={`${match.url}/${ausencia.id}`} color="link" size="sm">
                       {ausencia.id}
                     </Button>
                   </td>

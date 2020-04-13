@@ -101,7 +101,7 @@ export const AusenciaUpdate = (props: IAusenciaUpdateProps) => {
                 <Label id="descricaoLabel" for="ausencia-descricao">
                   <Translate contentKey="oGestorApp.ausencia.descricao">Descricao</Translate>
                 </Label>
-                <AvField disabled="false" id="ausencia-descricao" type="text" name="descricao" />
+                <AvField disabled="true" id="ausencia-descricao" type="text" name="descricao" />
               </AvGroup>
               <AvGroup>
                 <Label id="dataInicioLabel" for="ausencia-dataInicio">

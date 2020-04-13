@@ -55,7 +55,7 @@ export const Competencia = (props: ICompetenciaProps) => {
               {competenciaList.map((competencia, i) => (
                 <tr key={`entity-${i}`}>
                   <td>
-                    <Button tag={Link} to={`${match.url}/${competencia.id}`} color="link" size="sm">
+                    <Button hidden="true" tag={Link} to={`${match.url}/${competencia.id}`} color="link" size="sm">
                       {competencia.id}
                     </Button>
                   </td>

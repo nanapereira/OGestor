@@ -69,7 +69,7 @@ export const HealthPage = (props: IHealthPageProps) => {
                     <td>
                       {data[configPropKey].details ? (
                         <a onClick={getSystemHealthInfo(configPropKey, data[configPropKey])}>
-                          <FontAwesomeIcon icon="eye" />
+                          <FontAwesomeIcon icon="search" />
                         </a>
                       ) : null}
                     </td>

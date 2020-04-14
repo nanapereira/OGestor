@@ -104,7 +104,7 @@ export const Empregado = (props: IEmpregadoProps) => {
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${empregado.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="eye" />{' '}
+                        <FontAwesomeIcon icon="search" />{' '}
                         <span className="d-none d-md-inline">
                           <Translate contentKey="entity.action.view">View</Translate>
                         </span>

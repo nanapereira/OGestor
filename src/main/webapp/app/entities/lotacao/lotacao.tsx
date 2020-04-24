@@ -45,6 +45,9 @@ export const Lotacao = (props: ILotacaoProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.lotacao.descricao">Descricao</Translate>
                 </th>
+                <th>
+                  <span/>Ações<span/>
+                </th>
                 <th />
               </tr>
             </thead>

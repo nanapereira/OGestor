@@ -63,6 +63,9 @@ export const Empregado = (props: IEmpregadoProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.empregado.projetos">Projetos</Translate>
                 </th>
+                <th>
+                  <span/>Ações<span/>
+                </th>
                 <th />
               </tr>
             </thead>

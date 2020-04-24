@@ -51,6 +51,9 @@ export const Ausencia = (props: IAusenciaProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.ausencia.empregado">Empregado</Translate>
                 </th>
+                <th>
+                  <span/>Ações<span/>
+                </th>
                 <th />
               </tr>
             </thead>

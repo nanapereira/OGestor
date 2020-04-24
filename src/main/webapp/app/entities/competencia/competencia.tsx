@@ -48,6 +48,9 @@ export const Competencia = (props: ICompetenciaProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.competencia.empregados">Empregados</Translate>
                 </th>
+                <th>
+                  <span/>Ações<span/>
+                </th>
                 <th />
               </tr>
             </thead>

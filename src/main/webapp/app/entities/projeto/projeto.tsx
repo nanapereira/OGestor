@@ -54,9 +54,6 @@ export const Projeto = (props: IProjetoProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.projeto.empregados">Empregados</Translate>
                 </th>
-                <th>
-                  <span/>Ações<span/>
-                </th>
                 <th />
               </tr>
             </thead>

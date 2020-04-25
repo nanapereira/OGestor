@@ -78,7 +78,7 @@ export const Competencia = (props: ICompetenciaProps) => {
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${competencia.id}`} color="info" size="sm">
-                        <FontAwesomeIcon icon="search" />{' '}
+                        <FontAwesomeIcon icon="eye" />{' '}
                         <span className="d-none d-md-inline">
                         </span>
                       </Button>

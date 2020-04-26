@@ -1,6 +1,7 @@
 package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Competencia;
+import com.mycompany.myapp.domain.Lotacao;
 import com.mycompany.myapp.repository.CompetenciaRepository;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,7 +91,9 @@ public class CompetenciaResource {
     @GetMapping("/competencias")
     public List<Competencia> getAllCompetencias(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Competencias");
-        return competenciaRepository.findAllWithEagerRelationships();
+        List<Competencia> todasCompetencias = competenciaRepository.findAllWithEagerRelationships();
+        Collections.sort(todasCompetencias, Comparator.comparing(Competencia::getNome));
+        return todasCompetencias;
     }
 
     /**

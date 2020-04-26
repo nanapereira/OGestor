@@ -1,5 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
+import com.mycompany.myapp.domain.Lotacao;
 import com.mycompany.myapp.domain.Projeto;
 import com.mycompany.myapp.repository.ProjetoRepository;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,7 +91,9 @@ public class ProjetoResource {
     @GetMapping("/projetos")
     public List<Projeto> getAllProjetos(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Projetos");
-        return projetoRepository.findAllWithEagerRelationships();
+        List<Projeto> todosProjetos = projetoRepository.findAllWithEagerRelationships();
+        Collections.sort(todosProjetos, Comparator.comparing(Projeto::getDataInicio));
+        return todosProjetos;
     }
 
     /**

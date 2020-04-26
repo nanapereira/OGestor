@@ -1,5 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
+import com.mycompany.myapp.domain.Empregado;
 import com.mycompany.myapp.domain.Lotacao;
 import com.mycompany.myapp.repository.LotacaoRepository;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,7 +90,9 @@ public class LotacaoResource {
     @GetMapping("/lotacaos")
     public List<Lotacao> getAllLotacaos() {
         log.debug("REST request to get all Lotacaos");
-        return lotacaoRepository.findAll();
+        List<Lotacao> todasLotacoes = lotacaoRepository.findAll();
+        Collections.sort(todasLotacoes, Comparator.comparing(Lotacao::getNome));
+        return todasLotacoes;
     }
 
     /**

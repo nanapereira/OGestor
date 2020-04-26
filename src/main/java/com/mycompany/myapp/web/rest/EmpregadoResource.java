@@ -1,5 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
+import com.mycompany.myapp.domain.Ausencia;
 import com.mycompany.myapp.domain.Empregado;
 import com.mycompany.myapp.repository.EmpregadoRepository;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
@@ -15,6 +16,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -88,7 +91,9 @@ public class EmpregadoResource {
     @GetMapping("/empregados")
     public List<Empregado> getAllEmpregados(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Empregados");
-        return empregadoRepository.findAllWithEagerRelationships();
+        List<Empregado> todasEmpregados = empregadoRepository.findAllWithEagerRelationships();
+        Collections.sort(todasEmpregados, Comparator.comparing(Empregado::getMatricula));
+        return todasEmpregados;
     }
 
     /**

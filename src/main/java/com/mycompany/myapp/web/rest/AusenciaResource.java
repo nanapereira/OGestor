@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -87,7 +89,9 @@ public class AusenciaResource {
     @GetMapping("/ausencias")
     public List<Ausencia> getAllAusencias() {
         log.debug("REST request to get all Ausencias");
-        return ausenciaRepository.findAll();
+        List<Ausencia> todasAusencias = ausenciaRepository.findAll();
+       Collections.sort(todasAusencias, Comparator.comparing(Ausencia::getDataInicio));
+       return todasAusencias;
     }
 
     /**

@@ -20,10 +20,10 @@ export const EmpregadoDetail = (props: IEmpregadoDetailProps) => {
   const { empregadoEntity } = props;
   return (
     <Row>
-      <Col md="8">
-        <h2>
+      <Col md="6">
+        <h3>
           <Translate contentKey="oGestorApp.empregado.detail.title">Empregado</Translate> <b>{empregadoEntity.id}</b>
-        </h2>
+        </h3>
         <dl className="jh-entity-details">
           <dt>
             <span id="matricula">

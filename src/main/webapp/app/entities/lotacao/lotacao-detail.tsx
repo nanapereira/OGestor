@@ -20,10 +20,10 @@ export const LotacaoDetail = (props: ILotacaoDetailProps) => {
   const { lotacaoEntity } = props;
   return (
     <Row>
-      <Col md="8">
-        <h2>
+      <Col md="6">
+        <h3>
           <Translate contentKey="oGestorApp.lotacao.detail.title">Lotacao</Translate> <b>{lotacaoEntity.id}</b>
-        </h2>
+        </h3>
         <dl className="jh-entity-details">
           <dt>
             <span id="codigo">

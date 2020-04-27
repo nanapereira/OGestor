@@ -21,9 +21,9 @@ export const EmpregadoDetail = (props: IEmpregadoDetailProps) => {
   return (
     <Row>
       <Col md="6">
-        <h3>
+        <h4>
           <Translate contentKey="oGestorApp.empregado.detail.title">Empregado</Translate> <b>{empregadoEntity.id}</b>
-        </h3>
+        </h4>
         <dl className="jh-entity-details">
           <dt>
             <span id="matricula">

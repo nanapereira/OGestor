@@ -21,9 +21,9 @@ export const LotacaoDetail = (props: ILotacaoDetailProps) => {
   return (
     <Row>
       <Col md="6">
-        <h3>
+        <h4>
           <Translate contentKey="oGestorApp.lotacao.detail.title">Lotacao</Translate> <b>{lotacaoEntity.id}</b>
-        </h3>
+        </h4>
         <dl className="jh-entity-details">
           <dt>
             <span id="codigo">

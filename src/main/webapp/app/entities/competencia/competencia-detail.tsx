@@ -21,9 +21,9 @@ export const CompetenciaDetail = (props: ICompetenciaDetailProps) => {
   return (
     <Row>
       <Col md="6">
-        <h3>
+        <h4>
           <Translate contentKey="oGestorApp.competencia.detail.title">Competencia</Translate> <b>{competenciaEntity.id}</b>
-        </h3>
+        </h4>
         <dl className="jh-entity-details">
           <dt>
             <span id="codigo">

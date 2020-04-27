@@ -21,9 +21,9 @@ export const ProjetoDetail = (props: IProjetoDetailProps) => {
   return (
     <Row>
       <Col md="6">
-        <h3>
+        <h4>
           <Translate contentKey="oGestorApp.projeto.detail.title">Projeto</Translate> <b>{projetoEntity.id}</b>
-        </h3>
+        </h4>
         <dl className="jh-entity-details">
           <dt>
             <span id="nome">

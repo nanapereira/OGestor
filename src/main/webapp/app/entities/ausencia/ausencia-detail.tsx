@@ -21,9 +21,9 @@ export const AusenciaDetail = (props: IAusenciaDetailProps) => {
   return (
     <Row>
       <Col md="8">
-        <h2>
+        <h4>
           <Translate contentKey="oGestorApp.ausencia.detail.title">Ausencia</Translate> <b>{ausenciaEntity.id}</b>
-        </h2>
+        </h4>
         <dl className="jh-entity-details">
           <dt>
             <span id="tipo">

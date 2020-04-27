@@ -9,6 +9,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './ausencia.reducer';
 import { IAusencia } from 'app/shared/model/ausencia.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { Projeto } from '../projeto/projeto';
 
 export interface IAusenciaProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 
@@ -51,6 +52,9 @@ export const Ausencia = (props: IAusenciaProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.ausencia.empregado">Empregado</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="oGestorApp.ausencia.emp.projeto">Projetos</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -69,6 +73,7 @@ export const Ausencia = (props: IAusenciaProps) => {
                   <td>{ausencia.dataInicio}</td>
                   <td>{ausencia.dataFim}</td>
                   <td>{ausencia.empregado ? <Link to={`empregado/${ausencia.empregado.id}`}>{ausencia.empregado.nome}</Link> : ''}</td>
+                  <td>{ausencia.empregado}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${ausencia.id}`} color="info" size="sm">

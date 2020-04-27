@@ -20,7 +20,10 @@
       "descricao": "Descrição",
       "dataInicio": "Data Início",
       "dataFim": "Data Fim",
-      "empregado": "Empregado"
+      "empregado": "Empregado",
+      "emp": {
+        "projeto": "Projetos"
+      }
     }
   }
 }

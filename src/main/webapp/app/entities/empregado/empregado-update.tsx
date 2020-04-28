@@ -72,7 +72,7 @@ export const EmpregadoUpdate = (props: IEmpregadoUpdateProps) => {
   return (
     <div>
       <Row className="justify-content-center">
-        <Col md="8">
+        <Col md="6">
           <h2 id="oGestorApp.empregado.home.createOrEditLabel">
             <Translate contentKey="oGestorApp.empregado.home.createOrEditLabel">Create or edit a Empregado</Translate>
           </h2>

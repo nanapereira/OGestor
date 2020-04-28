@@ -20,7 +20,7 @@ export const AusenciaDetail = (props: IAusenciaDetailProps) => {
   const { ausenciaEntity } = props;
   return (
     <Row>
-      <Col md="8">
+      <Col md="6">
         <h4>
           <Translate contentKey="oGestorApp.ausencia.detail.title">Ausencia</Translate> <b>{ausenciaEntity.id}</b>
         </h4>

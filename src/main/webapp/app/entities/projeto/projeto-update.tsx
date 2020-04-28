@@ -63,7 +63,7 @@ export const ProjetoUpdate = (props: IProjetoUpdateProps) => {
   return (
     <div>
       <Row className="justify-content-center">
-        <Col md="8">
+        <Col md="6">
           <h2 id="oGestorApp.projeto.home.createOrEditLabel">
             <Translate contentKey="oGestorApp.projeto.home.createOrEditLabel">Create or edit a Projeto</Translate>
           </h2>

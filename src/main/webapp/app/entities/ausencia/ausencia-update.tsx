@@ -60,7 +60,7 @@ export const AusenciaUpdate = (props: IAusenciaUpdateProps) => {
   return (
     <div>
       <Row className="justify-content-center">
-        <Col md="8">
+        <Col md="6">
           <h2 id="oGestorApp.ausencia.home.createOrEditLabel">
             <Translate contentKey="oGestorApp.ausencia.home.createOrEditLabel">Create or edit a Ausencia</Translate>
           </h2>

@@ -55,7 +55,7 @@ export const LotacaoUpdate = (props: ILotacaoUpdateProps) => {
   return (
     <div>
       <Row className="justify-content-center">
-        <Col md="8">
+        <Col md="6">
           <h2 id="oGestorApp.lotacao.home.createOrEditLabel">
             <Translate contentKey="oGestorApp.lotacao.home.createOrEditLabel">Create or edit a Lotacao</Translate>
           </h2>

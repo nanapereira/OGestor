@@ -5,7 +5,6 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import javax.persistence.*;
 
 import java.io.Serializable;
-import java.util.Date;
 import java.util.Objects;
 
 import com.mycompany.myapp.domain.enumeration.TipoAusencia;
@@ -31,10 +30,10 @@ public class Ausencia implements Serializable {
     private String descricao;
 
     @Column(name = "data_inicio")
-    private Date dataInicio;
+    private String dataInicio;
 
     @Column(name = "data_fim")
-    private Date dataFim;
+    private String dataFim;
 
     @ManyToOne
     @JsonIgnoreProperties("ausencias")
@@ -75,29 +74,29 @@ public class Ausencia implements Serializable {
         this.descricao = descricao;
     }
 
-    public Date getDataInicio() {
+    public String getDataInicio() {
         return dataInicio;
     }
 
-    public Ausencia dataInicio(Date dataInicio) {
+    public Ausencia dataInicio(String dataInicio) {
         this.dataInicio = dataInicio;
         return this;
     }
 
-    public void setDataInicio(Date dataInicio) {
+    public void setDataInicio(String dataInicio) {
         this.dataInicio = dataInicio;
     }
 
-    public Date getDataFim() {
+    public String getDataFim() {
         return dataFim;
     }
 
-    public Ausencia dataFim(Date dataFim) {
+    public Ausencia dataFim(String dataFim) {
         this.dataFim = dataFim;
         return this;
     }
 
-    public void setDataFim(Date dataFim) {
+    public void setDataFim(String dataFim) {
         this.dataFim = dataFim;
     }
 

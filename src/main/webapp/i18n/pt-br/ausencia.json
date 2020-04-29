@@ -22,7 +22,8 @@
       "dataFim": "Data Fim",
       "empregado": "Empregado",
       "emp": {
-        "projeto": "Projetos"
+        "projeto": "Projetos",
+        "matricula": "Matrícula"
       }
     }
   }

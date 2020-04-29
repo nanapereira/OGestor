@@ -38,6 +38,9 @@ export const Ausencia = (props: IAusenciaProps) => {
                   <Translate contentKey="global.field.id">ID</Translate>
                 </th>
                 <th>
+                  <Translate contentKey="oGestorApp.ausencia.emp.matricula">Matricula</Translate>
+                </th>
+                <th>
                   <Translate contentKey="oGestorApp.ausencia.empregado">Empregado</Translate>
                 </th>
                 <th>
@@ -52,9 +55,6 @@ export const Ausencia = (props: IAusenciaProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.ausencia.dataFim">Data Fim</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="oGestorApp.ausencia.emp.projeto">Projetos</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -66,6 +66,7 @@ export const Ausencia = (props: IAusenciaProps) => {
                       {ausencia.id}
                     </Button>
                   </td>
+                  <td>{ausencia.empregado ? <Link to={`empregado/${ausencia.empregado.id}`}>{ausencia.empregado.matricula}</Link> : ''}</td>
                   <td>{ausencia.empregado ? <Link to={`empregado/${ausencia.empregado.id}`}>{ausencia.empregado.nome}</Link> : ''}</td>
                   <td>
                     <Translate contentKey={`oGestorApp.TipoAusencia.${ausencia.tipo}`} />

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { connect } from 'react-redux';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Col, Row, Table } from 'reactstrap';
-import { Translate, ICrudGetAllAction } from 'react-jhipster';
+import { Translate, ICrudGetAllAction, TextFormat } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { IRootState } from 'app/shared/reducers';
@@ -67,8 +67,8 @@ export const Projeto = (props: IProjetoProps) => {
                   </td>
                   <td>{projeto.nome}</td>
                   <td>{projeto.descricao}</td>
-                  <td>{projeto.dataInicio}</td>
-                  <td>{projeto.dataFim}</td>
+                  <td><TextFormat type="date" value={projeto.dataInicio} format={APP_LOCAL_DATE_FORMAT} /></td>
+                  <td><TextFormat type="date" value={projeto.dataFim} format={APP_LOCAL_DATE_FORMAT} /></td>
                   <td>{projeto.gestor ? <Link to={`empregado/${projeto.gestor.id}`}>{projeto.gestor.nome}</Link> : ''}</td>
                   <td>
                     {projeto.empregados

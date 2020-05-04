@@ -10,6 +10,7 @@ import { getEntities } from './ausencia.reducer';
 import { IAusencia } from 'app/shared/model/ausencia.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 import { Projeto } from '../projeto/projeto';
+import empregado from '../empregado/empregado';
 
 export interface IAusenciaProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> { }
 
@@ -56,7 +57,7 @@ export const Ausencia = (props: IAusenciaProps) => {
                   <Translate contentKey="oGestorApp.ausencia.dataFim">Data Fim</Translate>
                 </th>
                 <th>
-                  <Translate contentKey="oGestorApp.ausencia.emp.projeto">Projetos</Translate>
+                  <Translate contentKey="oGestorApp.empregado.projetos">Projetos</Translate>
                 </th>
                 <th />
               </tr>
@@ -77,7 +78,7 @@ export const Ausencia = (props: IAusenciaProps) => {
                   <td>{ausencia.descricao}</td>
                   <td><TextFormat type="date" value={ausencia.dataInicio} format={APP_LOCAL_DATE_FORMAT} /></td>
                   <td><TextFormat type="date" value={ausencia.dataFim} format={APP_LOCAL_DATE_FORMAT} /></td>
-                  <td>{ausencia.empregado ? <Link to={`empregado/${ausencia.empregado.id}`}>{ausencia.empregado.projetos}</Link> : ''}</td>
+                  <td>{ausencia.empregado ? <Link to={`empregado/${ausencia.empregado.id}`}>{ausencia.empregado.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${ausencia.id}`} color="info" size="sm">

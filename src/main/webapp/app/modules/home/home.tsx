@@ -15,7 +15,7 @@ export const Home = (props: IHomeProp) => {
 
   return (
     <Row>
-      <Col md="7">
+      <Col md="8">
         <h2>
           <Translate contentKey="home.title">Welcome, Java Hipster!</Translate>
         </h2>

@@ -56,9 +56,6 @@ export const Ausencia = (props: IAusenciaProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.ausencia.dataFim">Data Fim</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="oGestorApp.empregado.projetos">Projetos</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -78,7 +75,6 @@ export const Ausencia = (props: IAusenciaProps) => {
                   <td>{ausencia.descricao}</td>
                   <td><TextFormat type="date" value={ausencia.dataInicio} format={APP_LOCAL_DATE_FORMAT} /></td>
                   <td><TextFormat type="date" value={ausencia.dataFim} format={APP_LOCAL_DATE_FORMAT} /></td>
-                  <td>{ausencia.empregado ? <Link to={`empregado/${ausencia.empregado.id}`}>{ausencia.empregado.id}</Link> : ''}</td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${ausencia.id}`} color="info" size="sm">

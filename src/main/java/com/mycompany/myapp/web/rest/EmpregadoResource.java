@@ -1,6 +1,4 @@
 package com.mycompany.myapp.web.rest;
-
-import com.mycompany.myapp.domain.Ausencia;
 import com.mycompany.myapp.domain.Empregado;
 import com.mycompany.myapp.repository.EmpregadoRepository;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;

@@ -1,7 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Competencia;
-import com.mycompany.myapp.domain.Lotacao;
 import com.mycompany.myapp.repository.CompetenciaRepository;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 
@@ -92,7 +91,7 @@ public class CompetenciaResource {
     public List<Competencia> getAllCompetencias(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
         log.debug("REST request to get all Competencias");
         List<Competencia> todasCompetencias = competenciaRepository.findAllWithEagerRelationships();
-        Collections.sort(todasCompetencias, Comparator.comparing(Competencia::getNome));
+        Collections.sort(todasCompetencias, Comparator.comparing(Competencia::getCodigo));
         return todasCompetencias;
     }
 

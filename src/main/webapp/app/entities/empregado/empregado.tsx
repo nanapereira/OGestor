@@ -54,6 +54,7 @@ export const Empregado = (props: IEmpregadoProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.empregado.ramal">Ramal</Translate>
                 </th>
+                {/*
                 <th>
                   <Translate contentKey="oGestorApp.empregado.lotacao">Lotacao</Translate>
                 </th>
@@ -63,6 +64,7 @@ export const Empregado = (props: IEmpregadoProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.empregado.projetos">Projetos</Translate>
                 </th>
+                */}
                 <th />
               </tr>
             </thead>
@@ -80,6 +82,7 @@ export const Empregado = (props: IEmpregadoProps) => {
                   <td>{empregado.email}</td>
                   <td>{empregado.telefone}</td>
                   <td>{empregado.ramal}</td>
+                  {/*
                   <td>{empregado.lotacao ? <Link to={`lotacao/${empregado.lotacao.id}`}>{empregado.lotacao.nome}</Link> : ''}</td>
                   <td>
                     {empregado.competencias
@@ -101,6 +104,7 @@ export const Empregado = (props: IEmpregadoProps) => {
                         ))
                       : null}
                   </td>
+                      */}
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${empregado.id}`} color="info" size="sm">

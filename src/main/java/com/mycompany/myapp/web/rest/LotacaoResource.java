@@ -1,6 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
-import com.mycompany.myapp.domain.Empregado;
+
 import com.mycompany.myapp.domain.Lotacao;
 import com.mycompany.myapp.repository.LotacaoRepository;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
@@ -91,7 +91,7 @@ public class LotacaoResource {
     public List<Lotacao> getAllLotacaos() {
         log.debug("REST request to get all Lotacaos");
         List<Lotacao> todasLotacoes = lotacaoRepository.findAll();
-        Collections.sort(todasLotacoes, Comparator.comparing(Lotacao::getNome));
+        Collections.sort(todasLotacoes, Comparator.comparing(Lotacao::getCodigo));
         return todasLotacoes;
     }
 

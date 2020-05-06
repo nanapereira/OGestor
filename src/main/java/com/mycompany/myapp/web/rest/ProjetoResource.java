@@ -1,6 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
-import com.mycompany.myapp.domain.Lotacao;
+
 import com.mycompany.myapp.domain.Projeto;
 import com.mycompany.myapp.repository.ProjetoRepository;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;

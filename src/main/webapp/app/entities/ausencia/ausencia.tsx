@@ -40,7 +40,6 @@ export const Ausencia = (props: IAusenciaProps) => {
                 </th>
                 <th>
                   <Translate contentKey="oGestorApp.ausencia.emp.matricula">Matricula</Translate>
-                  <FontAwesomeIcon icon="filter" />
                 </th>
                 <th>
                   <Translate contentKey="oGestorApp.ausencia.empregado">Empregado</Translate>

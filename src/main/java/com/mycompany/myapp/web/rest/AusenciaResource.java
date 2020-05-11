@@ -2,12 +2,14 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Ausencia;
 import com.mycompany.myapp.repository.AusenciaRepository;
+import com.mycompany.myapp.service.AusenciaService;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.transaction.annotation.Transactional;
@@ -36,6 +38,9 @@ public class AusenciaResource {
     private String applicationName;
 
     private final AusenciaRepository ausenciaRepository;
+    
+    @Autowired
+    public AusenciaService ausenciaService;
 
     public AusenciaResource(AusenciaRepository ausenciaRepository) {
         this.ausenciaRepository = ausenciaRepository;
@@ -89,8 +94,24 @@ public class AusenciaResource {
     @GetMapping("/ausencias")
     public List<Ausencia> getAllAusencias() {
         log.debug("REST request to get all Ausencias");
-        List<Ausencia> todasAusencias = ausenciaRepository.findAll();
-       Collections.sort(todasAusencias, Comparator.comparing(Ausencia::getDataInicio));
+        //List<Ausencia> todasAusencias = ausenciaRepository.findAll();
+       
+        List<Ausencia> todasAusencias =  ausenciaService.findAllAusenciaWithEmpregadoProjetos();
+        Collections.sort(todasAusencias, Comparator.comparing(Ausencia::getDataInicio));
+       return todasAusencias;
+    }
+    
+    /**
+     * {@code GET  /ausencias/projeto/:idProjeto} : get all the ausencias filtered by projeto.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of ausencias in body.
+     */
+    @GetMapping("/ausencias/projeto/{idProjeto}")
+    public List<Ausencia> getAllAusenciasByProjeto(@PathVariable Long idProjeto) {
+        log.debug("REST request to get all Ausencias by projeto");
+       
+        List<Ausencia> todasAusencias =  ausenciaService.findAllAusenciaWithEmpregadoProjetosByProjeto(idProjeto);
+        Collections.sort(todasAusencias, Comparator.comparing(Ausencia::getDataInicio));
        return todasAusencias;
     }
 

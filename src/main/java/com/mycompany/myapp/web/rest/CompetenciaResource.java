@@ -1,8 +1,10 @@
 package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Competencia;
-import com.mycompany.myapp.repository.CompetenciaRepository;
+import com.mycompany.myapp.service.CompetenciaService;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
+import com.mycompany.myapp.service.dto.CompetenciaCriteria;
+import com.mycompany.myapp.service.CompetenciaQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -10,13 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -25,7 +24,6 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class CompetenciaResource {
 
     private final Logger log = LoggerFactory.getLogger(CompetenciaResource.class);
@@ -35,10 +33,13 @@ public class CompetenciaResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final CompetenciaRepository competenciaRepository;
+    private final CompetenciaService competenciaService;
 
-    public CompetenciaResource(CompetenciaRepository competenciaRepository) {
-        this.competenciaRepository = competenciaRepository;
+    private final CompetenciaQueryService competenciaQueryService;
+
+    public CompetenciaResource(CompetenciaService competenciaService, CompetenciaQueryService competenciaQueryService) {
+        this.competenciaService = competenciaService;
+        this.competenciaQueryService = competenciaQueryService;
     }
 
     /**
@@ -54,7 +55,7 @@ public class CompetenciaResource {
         if (competencia.getId() != null) {
             throw new BadRequestAlertException("A new competencia cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Competencia result = competenciaRepository.save(competencia);
+        Competencia result = competenciaService.save(competencia);
         return ResponseEntity.created(new URI("/api/competencias/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -75,7 +76,7 @@ public class CompetenciaResource {
         if (competencia.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Competencia result = competenciaRepository.save(competencia);
+        Competencia result = competenciaService.save(competencia);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, competencia.getId().toString()))
             .body(result);
@@ -84,15 +85,26 @@ public class CompetenciaResource {
     /**
      * {@code GET  /competencias} : get all the competencias.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of competencias in body.
      */
     @GetMapping("/competencias")
-    public List<Competencia> getAllCompetencias(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
-        log.debug("REST request to get all Competencias");
-        List<Competencia> todasCompetencias = competenciaRepository.findAllWithEagerRelationships();
-        Collections.sort(todasCompetencias, Comparator.comparing(Competencia::getCodigo));
-        return todasCompetencias;
+    public ResponseEntity<List<Competencia>> getAllCompetencias(CompetenciaCriteria criteria) {
+        log.debug("REST request to get Competencias by criteria: {}", criteria);
+        List<Competencia> entityList = competenciaQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /competencias/count} : count all the competencias.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/competencias/count")
+    public ResponseEntity<Long> countCompetencias(CompetenciaCriteria criteria) {
+        log.debug("REST request to count Competencias by criteria: {}", criteria);
+        return ResponseEntity.ok().body(competenciaQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -104,7 +116,7 @@ public class CompetenciaResource {
     @GetMapping("/competencias/{id}")
     public ResponseEntity<Competencia> getCompetencia(@PathVariable Long id) {
         log.debug("REST request to get Competencia : {}", id);
-        Optional<Competencia> competencia = competenciaRepository.findOneWithEagerRelationships(id);
+        Optional<Competencia> competencia = competenciaService.findOne(id);
         return ResponseUtil.wrapOrNotFound(competencia);
     }
 
@@ -117,7 +129,7 @@ public class CompetenciaResource {
     @DeleteMapping("/competencias/{id}")
     public ResponseEntity<Void> deleteCompetencia(@PathVariable Long id) {
         log.debug("REST request to delete Competencia : {}", id);
-        competenciaRepository.deleteById(id);
+        competenciaService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

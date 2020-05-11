@@ -15,7 +15,7 @@ import java.util.Optional;
  * Spring Data  repository for the Projeto entity.
  */
 @Repository
-public interface ProjetoRepository extends JpaRepository<Projeto, Long> {
+public interface ProjetoRepository extends JpaRepository<Projeto, Long>, JpaSpecificationExecutor<Projeto> {
 
     @Query(value = "select distinct projeto from Projeto projeto left join fetch projeto.empregados",
         countQuery = "select count(distinct projeto) from Projeto projeto")

@@ -15,7 +15,7 @@ import java.util.Optional;
  * Spring Data  repository for the Competencia entity.
  */
 @Repository
-public interface CompetenciaRepository extends JpaRepository<Competencia, Long> {
+public interface CompetenciaRepository extends JpaRepository<Competencia, Long>, JpaSpecificationExecutor<Competencia> {
 
     @Query(value = "select distinct competencia from Competencia competencia left join fetch competencia.empregados",
         countQuery = "select count(distinct competencia) from Competencia competencia")

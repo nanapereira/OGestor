@@ -45,9 +45,6 @@ export const Competencia = (props: ICompetenciaProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.competencia.descricao">Descricao</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="oGestorApp.competencia.empregados">Empregados</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -62,16 +59,6 @@ export const Competencia = (props: ICompetenciaProps) => {
                   <td>{competencia.codigo}</td>
                   <td>{competencia.nome}</td>
                   <td>{competencia.descricao}</td>
-                  <td>
-                    {competencia.empregados
-                      ? competencia.empregados.map((val, j) => (
-                          <span key={j}>
-                            <Link to={`empregado/${val.id}`}>{val.nome}</Link>
-                            {j === competencia.empregados.length - 1 ? '' : ', '}
-                          </span>
-                        ))
-                      : null}
-                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${competencia.id}`} color="info" size="sm">

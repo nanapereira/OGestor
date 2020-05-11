@@ -1,9 +1,10 @@
 package com.mycompany.myapp.web.rest;
 
-
 import com.mycompany.myapp.domain.Lotacao;
-import com.mycompany.myapp.repository.LotacaoRepository;
+import com.mycompany.myapp.service.LotacaoService;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
+import com.mycompany.myapp.service.dto.LotacaoCriteria;
+import com.mycompany.myapp.service.LotacaoQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -11,13 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +24,6 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class LotacaoResource {
 
     private final Logger log = LoggerFactory.getLogger(LotacaoResource.class);
@@ -36,10 +33,13 @@ public class LotacaoResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final LotacaoRepository lotacaoRepository;
+    private final LotacaoService lotacaoService;
 
-    public LotacaoResource(LotacaoRepository lotacaoRepository) {
-        this.lotacaoRepository = lotacaoRepository;
+    private final LotacaoQueryService lotacaoQueryService;
+
+    public LotacaoResource(LotacaoService lotacaoService, LotacaoQueryService lotacaoQueryService) {
+        this.lotacaoService = lotacaoService;
+        this.lotacaoQueryService = lotacaoQueryService;
     }
 
     /**
@@ -55,7 +55,7 @@ public class LotacaoResource {
         if (lotacao.getId() != null) {
             throw new BadRequestAlertException("A new lotacao cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Lotacao result = lotacaoRepository.save(lotacao);
+        Lotacao result = lotacaoService.save(lotacao);
         return ResponseEntity.created(new URI("/api/lotacaos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -76,7 +76,7 @@ public class LotacaoResource {
         if (lotacao.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Lotacao result = lotacaoRepository.save(lotacao);
+        Lotacao result = lotacaoService.save(lotacao);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, lotacao.getId().toString()))
             .body(result);
@@ -85,14 +85,26 @@ public class LotacaoResource {
     /**
      * {@code GET  /lotacaos} : get all the lotacaos.
      *
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of lotacaos in body.
      */
     @GetMapping("/lotacaos")
-    public List<Lotacao> getAllLotacaos() {
-        log.debug("REST request to get all Lotacaos");
-        List<Lotacao> todasLotacoes = lotacaoRepository.findAll();
-        Collections.sort(todasLotacoes, Comparator.comparing(Lotacao::getCodigo));
-        return todasLotacoes;
+    public ResponseEntity<List<Lotacao>> getAllLotacaos(LotacaoCriteria criteria) {
+        log.debug("REST request to get Lotacaos by criteria: {}", criteria);
+        List<Lotacao> entityList = lotacaoQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /lotacaos/count} : count all the lotacaos.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/lotacaos/count")
+    public ResponseEntity<Long> countLotacaos(LotacaoCriteria criteria) {
+        log.debug("REST request to count Lotacaos by criteria: {}", criteria);
+        return ResponseEntity.ok().body(lotacaoQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -104,7 +116,7 @@ public class LotacaoResource {
     @GetMapping("/lotacaos/{id}")
     public ResponseEntity<Lotacao> getLotacao(@PathVariable Long id) {
         log.debug("REST request to get Lotacao : {}", id);
-        Optional<Lotacao> lotacao = lotacaoRepository.findById(id);
+        Optional<Lotacao> lotacao = lotacaoService.findOne(id);
         return ResponseUtil.wrapOrNotFound(lotacao);
     }
 
@@ -117,7 +129,7 @@ public class LotacaoResource {
     @DeleteMapping("/lotacaos/{id}")
     public ResponseEntity<Void> deleteLotacao(@PathVariable Long id) {
         log.debug("REST request to delete Lotacao : {}", id);
-        lotacaoRepository.deleteById(id);
+        lotacaoService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

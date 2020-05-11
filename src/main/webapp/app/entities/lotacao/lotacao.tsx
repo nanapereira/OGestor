@@ -9,6 +9,7 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './lotacao.reducer';
 import { ILotacao } from 'app/shared/model/lotacao.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
+import { Empregado } from '../empregado/empregado';
 
 export interface ILotacaoProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> {}
 

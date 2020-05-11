@@ -10,5 +10,5 @@ import org.springframework.stereotype.Repository;
  */
 @SuppressWarnings("unused")
 @Repository
-public interface AusenciaRepository extends JpaRepository<Ausencia, Long> {
+public interface AusenciaRepository extends JpaRepository<Ausencia, Long>, JpaSpecificationExecutor<Ausencia> {
 }

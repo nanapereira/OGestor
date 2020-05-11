@@ -2,7 +2,11 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.OGestorApp;
 import com.mycompany.myapp.domain.Ausencia;
+import com.mycompany.myapp.domain.Empregado;
 import com.mycompany.myapp.repository.AusenciaRepository;
+import com.mycompany.myapp.service.AusenciaService;
+import com.mycompany.myapp.service.dto.AusenciaCriteria;
+import com.mycompany.myapp.service.AusenciaQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -45,6 +49,12 @@ public class AusenciaResourceIT {
 
     @Autowired
     private AusenciaRepository ausenciaRepository;
+
+    @Autowired
+    private AusenciaService ausenciaService;
+
+    @Autowired
+    private AusenciaQueryService ausenciaQueryService;
 
     @Autowired
     private EntityManager em;
@@ -163,6 +173,369 @@ public class AusenciaResourceIT {
             .andExpect(jsonPath("$.dataFim").value(DEFAULT_DATA_FIM));
     }
 
+
+    @Test
+    @Transactional
+    public void getAusenciasByIdFiltering() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        Long id = ausencia.getId();
+
+        defaultAusenciaShouldBeFound("id.equals=" + id);
+        defaultAusenciaShouldNotBeFound("id.notEquals=" + id);
+
+        defaultAusenciaShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultAusenciaShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultAusenciaShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultAusenciaShouldNotBeFound("id.lessThan=" + id);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByTipoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where tipo equals to DEFAULT_TIPO
+        defaultAusenciaShouldBeFound("tipo.equals=" + DEFAULT_TIPO);
+
+        // Get all the ausenciaList where tipo equals to UPDATED_TIPO
+        defaultAusenciaShouldNotBeFound("tipo.equals=" + UPDATED_TIPO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByTipoIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where tipo not equals to DEFAULT_TIPO
+        defaultAusenciaShouldNotBeFound("tipo.notEquals=" + DEFAULT_TIPO);
+
+        // Get all the ausenciaList where tipo not equals to UPDATED_TIPO
+        defaultAusenciaShouldBeFound("tipo.notEquals=" + UPDATED_TIPO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByTipoIsInShouldWork() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where tipo in DEFAULT_TIPO or UPDATED_TIPO
+        defaultAusenciaShouldBeFound("tipo.in=" + DEFAULT_TIPO + "," + UPDATED_TIPO);
+
+        // Get all the ausenciaList where tipo equals to UPDATED_TIPO
+        defaultAusenciaShouldNotBeFound("tipo.in=" + UPDATED_TIPO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByTipoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where tipo is not null
+        defaultAusenciaShouldBeFound("tipo.specified=true");
+
+        // Get all the ausenciaList where tipo is null
+        defaultAusenciaShouldNotBeFound("tipo.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDescricaoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where descricao equals to DEFAULT_DESCRICAO
+        defaultAusenciaShouldBeFound("descricao.equals=" + DEFAULT_DESCRICAO);
+
+        // Get all the ausenciaList where descricao equals to UPDATED_DESCRICAO
+        defaultAusenciaShouldNotBeFound("descricao.equals=" + UPDATED_DESCRICAO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDescricaoIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where descricao not equals to DEFAULT_DESCRICAO
+        defaultAusenciaShouldNotBeFound("descricao.notEquals=" + DEFAULT_DESCRICAO);
+
+        // Get all the ausenciaList where descricao not equals to UPDATED_DESCRICAO
+        defaultAusenciaShouldBeFound("descricao.notEquals=" + UPDATED_DESCRICAO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDescricaoIsInShouldWork() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where descricao in DEFAULT_DESCRICAO or UPDATED_DESCRICAO
+        defaultAusenciaShouldBeFound("descricao.in=" + DEFAULT_DESCRICAO + "," + UPDATED_DESCRICAO);
+
+        // Get all the ausenciaList where descricao equals to UPDATED_DESCRICAO
+        defaultAusenciaShouldNotBeFound("descricao.in=" + UPDATED_DESCRICAO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDescricaoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where descricao is not null
+        defaultAusenciaShouldBeFound("descricao.specified=true");
+
+        // Get all the ausenciaList where descricao is null
+        defaultAusenciaShouldNotBeFound("descricao.specified=false");
+    }
+                @Test
+    @Transactional
+    public void getAllAusenciasByDescricaoContainsSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where descricao contains DEFAULT_DESCRICAO
+        defaultAusenciaShouldBeFound("descricao.contains=" + DEFAULT_DESCRICAO);
+
+        // Get all the ausenciaList where descricao contains UPDATED_DESCRICAO
+        defaultAusenciaShouldNotBeFound("descricao.contains=" + UPDATED_DESCRICAO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDescricaoNotContainsSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where descricao does not contain DEFAULT_DESCRICAO
+        defaultAusenciaShouldNotBeFound("descricao.doesNotContain=" + DEFAULT_DESCRICAO);
+
+        // Get all the ausenciaList where descricao does not contain UPDATED_DESCRICAO
+        defaultAusenciaShouldBeFound("descricao.doesNotContain=" + UPDATED_DESCRICAO);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDataInicioIsEqualToSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where dataInicio equals to DEFAULT_DATA_INICIO
+        defaultAusenciaShouldBeFound("dataInicio.equals=" + DEFAULT_DATA_INICIO);
+
+        // Get all the ausenciaList where dataInicio equals to UPDATED_DATA_INICIO
+        defaultAusenciaShouldNotBeFound("dataInicio.equals=" + UPDATED_DATA_INICIO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDataInicioIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where dataInicio not equals to DEFAULT_DATA_INICIO
+        defaultAusenciaShouldNotBeFound("dataInicio.notEquals=" + DEFAULT_DATA_INICIO);
+
+        // Get all the ausenciaList where dataInicio not equals to UPDATED_DATA_INICIO
+        defaultAusenciaShouldBeFound("dataInicio.notEquals=" + UPDATED_DATA_INICIO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDataInicioIsInShouldWork() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where dataInicio in DEFAULT_DATA_INICIO or UPDATED_DATA_INICIO
+        defaultAusenciaShouldBeFound("dataInicio.in=" + DEFAULT_DATA_INICIO + "," + UPDATED_DATA_INICIO);
+
+        // Get all the ausenciaList where dataInicio equals to UPDATED_DATA_INICIO
+        defaultAusenciaShouldNotBeFound("dataInicio.in=" + UPDATED_DATA_INICIO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDataInicioIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where dataInicio is not null
+        defaultAusenciaShouldBeFound("dataInicio.specified=true");
+
+        // Get all the ausenciaList where dataInicio is null
+        defaultAusenciaShouldNotBeFound("dataInicio.specified=false");
+    }
+                @Test
+    @Transactional
+    public void getAllAusenciasByDataInicioContainsSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where dataInicio contains DEFAULT_DATA_INICIO
+        defaultAusenciaShouldBeFound("dataInicio.contains=" + DEFAULT_DATA_INICIO);
+
+        // Get all the ausenciaList where dataInicio contains UPDATED_DATA_INICIO
+        defaultAusenciaShouldNotBeFound("dataInicio.contains=" + UPDATED_DATA_INICIO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDataInicioNotContainsSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where dataInicio does not contain DEFAULT_DATA_INICIO
+        defaultAusenciaShouldNotBeFound("dataInicio.doesNotContain=" + DEFAULT_DATA_INICIO);
+
+        // Get all the ausenciaList where dataInicio does not contain UPDATED_DATA_INICIO
+        defaultAusenciaShouldBeFound("dataInicio.doesNotContain=" + UPDATED_DATA_INICIO);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDataFimIsEqualToSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where dataFim equals to DEFAULT_DATA_FIM
+        defaultAusenciaShouldBeFound("dataFim.equals=" + DEFAULT_DATA_FIM);
+
+        // Get all the ausenciaList where dataFim equals to UPDATED_DATA_FIM
+        defaultAusenciaShouldNotBeFound("dataFim.equals=" + UPDATED_DATA_FIM);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDataFimIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where dataFim not equals to DEFAULT_DATA_FIM
+        defaultAusenciaShouldNotBeFound("dataFim.notEquals=" + DEFAULT_DATA_FIM);
+
+        // Get all the ausenciaList where dataFim not equals to UPDATED_DATA_FIM
+        defaultAusenciaShouldBeFound("dataFim.notEquals=" + UPDATED_DATA_FIM);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDataFimIsInShouldWork() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where dataFim in DEFAULT_DATA_FIM or UPDATED_DATA_FIM
+        defaultAusenciaShouldBeFound("dataFim.in=" + DEFAULT_DATA_FIM + "," + UPDATED_DATA_FIM);
+
+        // Get all the ausenciaList where dataFim equals to UPDATED_DATA_FIM
+        defaultAusenciaShouldNotBeFound("dataFim.in=" + UPDATED_DATA_FIM);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDataFimIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where dataFim is not null
+        defaultAusenciaShouldBeFound("dataFim.specified=true");
+
+        // Get all the ausenciaList where dataFim is null
+        defaultAusenciaShouldNotBeFound("dataFim.specified=false");
+    }
+                @Test
+    @Transactional
+    public void getAllAusenciasByDataFimContainsSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where dataFim contains DEFAULT_DATA_FIM
+        defaultAusenciaShouldBeFound("dataFim.contains=" + DEFAULT_DATA_FIM);
+
+        // Get all the ausenciaList where dataFim contains UPDATED_DATA_FIM
+        defaultAusenciaShouldNotBeFound("dataFim.contains=" + UPDATED_DATA_FIM);
+    }
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByDataFimNotContainsSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+
+        // Get all the ausenciaList where dataFim does not contain DEFAULT_DATA_FIM
+        defaultAusenciaShouldNotBeFound("dataFim.doesNotContain=" + DEFAULT_DATA_FIM);
+
+        // Get all the ausenciaList where dataFim does not contain UPDATED_DATA_FIM
+        defaultAusenciaShouldBeFound("dataFim.doesNotContain=" + UPDATED_DATA_FIM);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllAusenciasByEmpregadoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        ausenciaRepository.saveAndFlush(ausencia);
+        Empregado empregado = EmpregadoResourceIT.createEntity(em);
+        em.persist(empregado);
+        em.flush();
+        ausencia.setEmpregado(empregado);
+        ausenciaRepository.saveAndFlush(ausencia);
+        Long empregadoId = empregado.getId();
+
+        // Get all the ausenciaList where empregado equals to empregadoId
+        defaultAusenciaShouldBeFound("empregadoId.equals=" + empregadoId);
+
+        // Get all the ausenciaList where empregado equals to empregadoId + 1
+        defaultAusenciaShouldNotBeFound("empregadoId.equals=" + (empregadoId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultAusenciaShouldBeFound(String filter) throws Exception {
+        restAusenciaMockMvc.perform(get("/api/ausencias?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(ausencia.getId().intValue())))
+            .andExpect(jsonPath("$.[*].tipo").value(hasItem(DEFAULT_TIPO.toString())))
+            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)))
+            .andExpect(jsonPath("$.[*].dataInicio").value(hasItem(DEFAULT_DATA_INICIO)))
+            .andExpect(jsonPath("$.[*].dataFim").value(hasItem(DEFAULT_DATA_FIM)));
+
+        // Check, that the count call also returns 1
+        restAusenciaMockMvc.perform(get("/api/ausencias/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultAusenciaShouldNotBeFound(String filter) throws Exception {
+        restAusenciaMockMvc.perform(get("/api/ausencias?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restAusenciaMockMvc.perform(get("/api/ausencias/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
+    }
+
+
     @Test
     @Transactional
     public void getNonExistingAusencia() throws Exception {
@@ -175,7 +548,7 @@ public class AusenciaResourceIT {
     @Transactional
     public void updateAusencia() throws Exception {
         // Initialize the database
-        ausenciaRepository.saveAndFlush(ausencia);
+        ausenciaService.save(ausencia);
 
         int databaseSizeBeforeUpdate = ausenciaRepository.findAll().size();
 
@@ -226,7 +599,7 @@ public class AusenciaResourceIT {
     @Transactional
     public void deleteAusencia() throws Exception {
         // Initialize the database
-        ausenciaRepository.saveAndFlush(ausencia);
+        ausenciaService.save(ausencia);
 
         int databaseSizeBeforeDelete = ausenciaRepository.findAll().size();
 

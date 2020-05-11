@@ -18,7 +18,8 @@
       },
       "codigo": "Código",
       "nome": "Nome",
-      "descricao": "Descrição"
+      "descricao": "Descrição",
+      "empregados": "Empregados"
     }
   }
 }

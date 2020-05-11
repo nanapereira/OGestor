@@ -2,7 +2,11 @@ package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.OGestorApp;
 import com.mycompany.myapp.domain.Competencia;
+import com.mycompany.myapp.domain.Empregado;
 import com.mycompany.myapp.repository.CompetenciaRepository;
+import com.mycompany.myapp.service.CompetenciaService;
+import com.mycompany.myapp.service.dto.CompetenciaCriteria;
+import com.mycompany.myapp.service.CompetenciaQueryService;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -39,6 +43,7 @@ public class CompetenciaResourceIT {
 
     private static final Integer DEFAULT_CODIGO = 1;
     private static final Integer UPDATED_CODIGO = 2;
+    private static final Integer SMALLER_CODIGO = 1 - 1;
 
     private static final String DEFAULT_NOME = "AAAAAAAAAA";
     private static final String UPDATED_NOME = "BBBBBBBBBB";
@@ -51,6 +56,15 @@ public class CompetenciaResourceIT {
 
     @Mock
     private CompetenciaRepository competenciaRepositoryMock;
+
+    @Mock
+    private CompetenciaService competenciaServiceMock;
+
+    @Autowired
+    private CompetenciaService competenciaService;
+
+    @Autowired
+    private CompetenciaQueryService competenciaQueryService;
 
     @Autowired
     private EntityManager em;
@@ -150,24 +164,22 @@ public class CompetenciaResourceIT {
     
     @SuppressWarnings({"unchecked"})
     public void getAllCompetenciasWithEagerRelationshipsIsEnabled() throws Exception {
-        CompetenciaResource competenciaResource = new CompetenciaResource(competenciaRepositoryMock);
-        when(competenciaRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(competenciaServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restCompetenciaMockMvc.perform(get("/api/competencias?eagerload=true"))
             .andExpect(status().isOk());
 
-        verify(competenciaRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+        verify(competenciaServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @SuppressWarnings({"unchecked"})
     public void getAllCompetenciasWithEagerRelationshipsIsNotEnabled() throws Exception {
-        CompetenciaResource competenciaResource = new CompetenciaResource(competenciaRepositoryMock);
-        when(competenciaRepositoryMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
+        when(competenciaServiceMock.findAllWithEagerRelationships(any())).thenReturn(new PageImpl(new ArrayList<>()));
 
         restCompetenciaMockMvc.perform(get("/api/competencias?eagerload=true"))
             .andExpect(status().isOk());
 
-        verify(competenciaRepositoryMock, times(1)).findAllWithEagerRelationships(any());
+        verify(competenciaServiceMock, times(1)).findAllWithEagerRelationships(any());
     }
 
     @Test
@@ -186,6 +198,363 @@ public class CompetenciaResourceIT {
             .andExpect(jsonPath("$.descricao").value(DEFAULT_DESCRICAO));
     }
 
+
+    @Test
+    @Transactional
+    public void getCompetenciasByIdFiltering() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        Long id = competencia.getId();
+
+        defaultCompetenciaShouldBeFound("id.equals=" + id);
+        defaultCompetenciaShouldNotBeFound("id.notEquals=" + id);
+
+        defaultCompetenciaShouldBeFound("id.greaterThanOrEqual=" + id);
+        defaultCompetenciaShouldNotBeFound("id.greaterThan=" + id);
+
+        defaultCompetenciaShouldBeFound("id.lessThanOrEqual=" + id);
+        defaultCompetenciaShouldNotBeFound("id.lessThan=" + id);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByCodigoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where codigo equals to DEFAULT_CODIGO
+        defaultCompetenciaShouldBeFound("codigo.equals=" + DEFAULT_CODIGO);
+
+        // Get all the competenciaList where codigo equals to UPDATED_CODIGO
+        defaultCompetenciaShouldNotBeFound("codigo.equals=" + UPDATED_CODIGO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByCodigoIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where codigo not equals to DEFAULT_CODIGO
+        defaultCompetenciaShouldNotBeFound("codigo.notEquals=" + DEFAULT_CODIGO);
+
+        // Get all the competenciaList where codigo not equals to UPDATED_CODIGO
+        defaultCompetenciaShouldBeFound("codigo.notEquals=" + UPDATED_CODIGO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByCodigoIsInShouldWork() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where codigo in DEFAULT_CODIGO or UPDATED_CODIGO
+        defaultCompetenciaShouldBeFound("codigo.in=" + DEFAULT_CODIGO + "," + UPDATED_CODIGO);
+
+        // Get all the competenciaList where codigo equals to UPDATED_CODIGO
+        defaultCompetenciaShouldNotBeFound("codigo.in=" + UPDATED_CODIGO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByCodigoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where codigo is not null
+        defaultCompetenciaShouldBeFound("codigo.specified=true");
+
+        // Get all the competenciaList where codigo is null
+        defaultCompetenciaShouldNotBeFound("codigo.specified=false");
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByCodigoIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where codigo is greater than or equal to DEFAULT_CODIGO
+        defaultCompetenciaShouldBeFound("codigo.greaterThanOrEqual=" + DEFAULT_CODIGO);
+
+        // Get all the competenciaList where codigo is greater than or equal to UPDATED_CODIGO
+        defaultCompetenciaShouldNotBeFound("codigo.greaterThanOrEqual=" + UPDATED_CODIGO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByCodigoIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where codigo is less than or equal to DEFAULT_CODIGO
+        defaultCompetenciaShouldBeFound("codigo.lessThanOrEqual=" + DEFAULT_CODIGO);
+
+        // Get all the competenciaList where codigo is less than or equal to SMALLER_CODIGO
+        defaultCompetenciaShouldNotBeFound("codigo.lessThanOrEqual=" + SMALLER_CODIGO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByCodigoIsLessThanSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where codigo is less than DEFAULT_CODIGO
+        defaultCompetenciaShouldNotBeFound("codigo.lessThan=" + DEFAULT_CODIGO);
+
+        // Get all the competenciaList where codigo is less than UPDATED_CODIGO
+        defaultCompetenciaShouldBeFound("codigo.lessThan=" + UPDATED_CODIGO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByCodigoIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where codigo is greater than DEFAULT_CODIGO
+        defaultCompetenciaShouldNotBeFound("codigo.greaterThan=" + DEFAULT_CODIGO);
+
+        // Get all the competenciaList where codigo is greater than SMALLER_CODIGO
+        defaultCompetenciaShouldBeFound("codigo.greaterThan=" + SMALLER_CODIGO);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByNomeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where nome equals to DEFAULT_NOME
+        defaultCompetenciaShouldBeFound("nome.equals=" + DEFAULT_NOME);
+
+        // Get all the competenciaList where nome equals to UPDATED_NOME
+        defaultCompetenciaShouldNotBeFound("nome.equals=" + UPDATED_NOME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByNomeIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where nome not equals to DEFAULT_NOME
+        defaultCompetenciaShouldNotBeFound("nome.notEquals=" + DEFAULT_NOME);
+
+        // Get all the competenciaList where nome not equals to UPDATED_NOME
+        defaultCompetenciaShouldBeFound("nome.notEquals=" + UPDATED_NOME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByNomeIsInShouldWork() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where nome in DEFAULT_NOME or UPDATED_NOME
+        defaultCompetenciaShouldBeFound("nome.in=" + DEFAULT_NOME + "," + UPDATED_NOME);
+
+        // Get all the competenciaList where nome equals to UPDATED_NOME
+        defaultCompetenciaShouldNotBeFound("nome.in=" + UPDATED_NOME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByNomeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where nome is not null
+        defaultCompetenciaShouldBeFound("nome.specified=true");
+
+        // Get all the competenciaList where nome is null
+        defaultCompetenciaShouldNotBeFound("nome.specified=false");
+    }
+                @Test
+    @Transactional
+    public void getAllCompetenciasByNomeContainsSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where nome contains DEFAULT_NOME
+        defaultCompetenciaShouldBeFound("nome.contains=" + DEFAULT_NOME);
+
+        // Get all the competenciaList where nome contains UPDATED_NOME
+        defaultCompetenciaShouldNotBeFound("nome.contains=" + UPDATED_NOME);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByNomeNotContainsSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where nome does not contain DEFAULT_NOME
+        defaultCompetenciaShouldNotBeFound("nome.doesNotContain=" + DEFAULT_NOME);
+
+        // Get all the competenciaList where nome does not contain UPDATED_NOME
+        defaultCompetenciaShouldBeFound("nome.doesNotContain=" + UPDATED_NOME);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByDescricaoIsEqualToSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where descricao equals to DEFAULT_DESCRICAO
+        defaultCompetenciaShouldBeFound("descricao.equals=" + DEFAULT_DESCRICAO);
+
+        // Get all the competenciaList where descricao equals to UPDATED_DESCRICAO
+        defaultCompetenciaShouldNotBeFound("descricao.equals=" + UPDATED_DESCRICAO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByDescricaoIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where descricao not equals to DEFAULT_DESCRICAO
+        defaultCompetenciaShouldNotBeFound("descricao.notEquals=" + DEFAULT_DESCRICAO);
+
+        // Get all the competenciaList where descricao not equals to UPDATED_DESCRICAO
+        defaultCompetenciaShouldBeFound("descricao.notEquals=" + UPDATED_DESCRICAO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByDescricaoIsInShouldWork() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where descricao in DEFAULT_DESCRICAO or UPDATED_DESCRICAO
+        defaultCompetenciaShouldBeFound("descricao.in=" + DEFAULT_DESCRICAO + "," + UPDATED_DESCRICAO);
+
+        // Get all the competenciaList where descricao equals to UPDATED_DESCRICAO
+        defaultCompetenciaShouldNotBeFound("descricao.in=" + UPDATED_DESCRICAO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByDescricaoIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where descricao is not null
+        defaultCompetenciaShouldBeFound("descricao.specified=true");
+
+        // Get all the competenciaList where descricao is null
+        defaultCompetenciaShouldNotBeFound("descricao.specified=false");
+    }
+                @Test
+    @Transactional
+    public void getAllCompetenciasByDescricaoContainsSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where descricao contains DEFAULT_DESCRICAO
+        defaultCompetenciaShouldBeFound("descricao.contains=" + DEFAULT_DESCRICAO);
+
+        // Get all the competenciaList where descricao contains UPDATED_DESCRICAO
+        defaultCompetenciaShouldNotBeFound("descricao.contains=" + UPDATED_DESCRICAO);
+    }
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByDescricaoNotContainsSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+
+        // Get all the competenciaList where descricao does not contain DEFAULT_DESCRICAO
+        defaultCompetenciaShouldNotBeFound("descricao.doesNotContain=" + DEFAULT_DESCRICAO);
+
+        // Get all the competenciaList where descricao does not contain UPDATED_DESCRICAO
+        defaultCompetenciaShouldBeFound("descricao.doesNotContain=" + UPDATED_DESCRICAO);
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByEmpregadosIsEqualToSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+        Empregado empregados = EmpregadoResourceIT.createEntity(em);
+        em.persist(empregados);
+        em.flush();
+        competencia.addEmpregados(empregados);
+        competenciaRepository.saveAndFlush(competencia);
+        Long empregadosId = empregados.getId();
+
+        // Get all the competenciaList where empregados equals to empregadosId
+        defaultCompetenciaShouldBeFound("empregadosId.equals=" + empregadosId);
+
+        // Get all the competenciaList where empregados equals to empregadosId + 1
+        defaultCompetenciaShouldNotBeFound("empregadosId.equals=" + (empregadosId + 1));
+    }
+
+
+    @Test
+    @Transactional
+    public void getAllCompetenciasByListaEmpregadosIsEqualToSomething() throws Exception {
+        // Initialize the database
+        competenciaRepository.saveAndFlush(competencia);
+        Empregado listaEmpregados = EmpregadoResourceIT.createEntity(em);
+        em.persist(listaEmpregados);
+        em.flush();
+        competencia.addListaEmpregados(listaEmpregados);
+        competenciaRepository.saveAndFlush(competencia);
+        Long listaEmpregadosId = listaEmpregados.getId();
+
+        // Get all the competenciaList where listaEmpregados equals to listaEmpregadosId
+        defaultCompetenciaShouldBeFound("listaEmpregadosId.equals=" + listaEmpregadosId);
+
+        // Get all the competenciaList where listaEmpregados equals to listaEmpregadosId + 1
+        defaultCompetenciaShouldNotBeFound("listaEmpregadosId.equals=" + (listaEmpregadosId + 1));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is returned.
+     */
+    private void defaultCompetenciaShouldBeFound(String filter) throws Exception {
+        restCompetenciaMockMvc.perform(get("/api/competencias?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(competencia.getId().intValue())))
+            .andExpect(jsonPath("$.[*].codigo").value(hasItem(DEFAULT_CODIGO)))
+            .andExpect(jsonPath("$.[*].nome").value(hasItem(DEFAULT_NOME)))
+            .andExpect(jsonPath("$.[*].descricao").value(hasItem(DEFAULT_DESCRICAO)));
+
+        // Check, that the count call also returns 1
+        restCompetenciaMockMvc.perform(get("/api/competencias/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("1"));
+    }
+
+    /**
+     * Executes the search, and checks that the default entity is not returned.
+     */
+    private void defaultCompetenciaShouldNotBeFound(String filter) throws Exception {
+        restCompetenciaMockMvc.perform(get("/api/competencias?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(jsonPath("$").isArray())
+            .andExpect(jsonPath("$").isEmpty());
+
+        // Check, that the count call also returns 0
+        restCompetenciaMockMvc.perform(get("/api/competencias/count?sort=id,desc&" + filter))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
+            .andExpect(content().string("0"));
+    }
+
+
     @Test
     @Transactional
     public void getNonExistingCompetencia() throws Exception {
@@ -198,7 +567,7 @@ public class CompetenciaResourceIT {
     @Transactional
     public void updateCompetencia() throws Exception {
         // Initialize the database
-        competenciaRepository.saveAndFlush(competencia);
+        competenciaService.save(competencia);
 
         int databaseSizeBeforeUpdate = competenciaRepository.findAll().size();
 
@@ -247,7 +616,7 @@ public class CompetenciaResourceIT {
     @Transactional
     public void deleteCompetencia() throws Exception {
         // Initialize the database
-        competenciaRepository.saveAndFlush(competencia);
+        competenciaService.save(competencia);
 
         int databaseSizeBeforeDelete = competenciaRepository.findAll().size();
 

@@ -1,9 +1,10 @@
 package com.mycompany.myapp.web.rest;
 
-
 import com.mycompany.myapp.domain.Projeto;
-import com.mycompany.myapp.repository.ProjetoRepository;
+import com.mycompany.myapp.service.ProjetoService;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
+import com.mycompany.myapp.service.dto.ProjetoCriteria;
+import com.mycompany.myapp.service.ProjetoQueryService;
 
 import io.github.jhipster.web.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -11,13 +12,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 import java.util.Optional;
 
@@ -26,7 +24,6 @@ import java.util.Optional;
  */
 @RestController
 @RequestMapping("/api")
-@Transactional
 public class ProjetoResource {
 
     private final Logger log = LoggerFactory.getLogger(ProjetoResource.class);
@@ -36,10 +33,13 @@ public class ProjetoResource {
     @Value("${jhipster.clientApp.name}")
     private String applicationName;
 
-    private final ProjetoRepository projetoRepository;
+    private final ProjetoService projetoService;
 
-    public ProjetoResource(ProjetoRepository projetoRepository) {
-        this.projetoRepository = projetoRepository;
+    private final ProjetoQueryService projetoQueryService;
+
+    public ProjetoResource(ProjetoService projetoService, ProjetoQueryService projetoQueryService) {
+        this.projetoService = projetoService;
+        this.projetoQueryService = projetoQueryService;
     }
 
     /**
@@ -55,7 +55,7 @@ public class ProjetoResource {
         if (projeto.getId() != null) {
             throw new BadRequestAlertException("A new projeto cannot already have an ID", ENTITY_NAME, "idexists");
         }
-        Projeto result = projetoRepository.save(projeto);
+        Projeto result = projetoService.save(projeto);
         return ResponseEntity.created(new URI("/api/projetos/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(applicationName, true, ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -76,7 +76,7 @@ public class ProjetoResource {
         if (projeto.getId() == null) {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
-        Projeto result = projetoRepository.save(projeto);
+        Projeto result = projetoService.save(projeto);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(applicationName, true, ENTITY_NAME, projeto.getId().toString()))
             .body(result);
@@ -85,15 +85,26 @@ public class ProjetoResource {
     /**
      * {@code GET  /projetos} : get all the projetos.
      *
-     * @param eagerload flag to eager load entities from relationships (This is applicable for many-to-many).
+     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of projetos in body.
      */
     @GetMapping("/projetos")
-    public List<Projeto> getAllProjetos(@RequestParam(required = false, defaultValue = "false") boolean eagerload) {
-        log.debug("REST request to get all Projetos");
-        List<Projeto> todosProjetos = projetoRepository.findAllWithEagerRelationships();
-        Collections.sort(todosProjetos, Comparator.comparing(Projeto::getDataInicio));
-        return todosProjetos;
+    public ResponseEntity<List<Projeto>> getAllProjetos(ProjetoCriteria criteria) {
+        log.debug("REST request to get Projetos by criteria: {}", criteria);
+        List<Projeto> entityList = projetoQueryService.findByCriteria(criteria);
+        return ResponseEntity.ok().body(entityList);
+    }
+
+    /**
+     * {@code GET  /projetos/count} : count all the projetos.
+     *
+     * @param criteria the criteria which the requested entities should match.
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the count in body.
+     */
+    @GetMapping("/projetos/count")
+    public ResponseEntity<Long> countProjetos(ProjetoCriteria criteria) {
+        log.debug("REST request to count Projetos by criteria: {}", criteria);
+        return ResponseEntity.ok().body(projetoQueryService.countByCriteria(criteria));
     }
 
     /**
@@ -105,7 +116,7 @@ public class ProjetoResource {
     @GetMapping("/projetos/{id}")
     public ResponseEntity<Projeto> getProjeto(@PathVariable Long id) {
         log.debug("REST request to get Projeto : {}", id);
-        Optional<Projeto> projeto = projetoRepository.findOneWithEagerRelationships(id);
+        Optional<Projeto> projeto = projetoService.findOne(id);
         return ResponseUtil.wrapOrNotFound(projeto);
     }
 
@@ -118,7 +129,7 @@ public class ProjetoResource {
     @DeleteMapping("/projetos/{id}")
     public ResponseEntity<Void> deleteProjeto(@PathVariable Long id) {
         log.debug("REST request to delete Projeto : {}", id);
-        projetoRepository.deleteById(id);
+        projetoService.delete(id);
         return ResponseEntity.noContent().headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString())).build();
     }
 }

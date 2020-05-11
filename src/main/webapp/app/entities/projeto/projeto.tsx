@@ -51,9 +51,6 @@ export const Projeto = (props: IProjetoProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.projeto.gestor">Gestor</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="oGestorApp.projeto.empregados">Empregados</Translate>
-                </th>
                 <th />
               </tr>
             </thead>
@@ -70,16 +67,6 @@ export const Projeto = (props: IProjetoProps) => {
                   <td><TextFormat type="date" value={projeto.dataInicio} format={APP_LOCAL_DATE_FORMAT} /></td>
                   <td><TextFormat type="date" value={projeto.dataFim} format={APP_LOCAL_DATE_FORMAT} /></td>
                   <td>{projeto.gestor ? <Link to={`empregado/${projeto.gestor.id}`}>{projeto.gestor.nome}</Link> : ''}</td>
-                  <td>
-                    {projeto.empregados
-                      ? projeto.empregados.map((val, j) => (
-                          <span key={j}>
-                            <Link to={`empregado/${val.id}`}>{val.nome}</Link>
-                            {j === projeto.empregados.length - 1 ? '' : ', '}
-                          </span>
-                        ))
-                      : null}
-                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${projeto.id}`} color="info" size="sm">

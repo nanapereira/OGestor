@@ -10,7 +10,7 @@ import { getEntity } from './ausencia.reducer';
 import { IAusencia } from 'app/shared/model/ausencia.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
 
-export interface IAusenciaDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> {}
+export interface IAusenciaDetailProps extends StateProps, DispatchProps, RouteComponentProps<{ id: string }> { }
 
 export const AusenciaDetail = (props: IAusenciaDetailProps) => {
   useEffect(() => {
@@ -25,6 +25,14 @@ export const AusenciaDetail = (props: IAusenciaDetailProps) => {
           <Translate contentKey="oGestorApp.ausencia.detail.title">Ausencia</Translate> <b>{ausenciaEntity.id}</b>
         </h4>
         <dl className="jh-entity-details">
+          <dt>
+            <Translate contentKey="oGestorApp.ausencia.emp.matricula">Matricula</Translate>
+          </dt>
+          <dd>{ausenciaEntity.empregado ? ausenciaEntity.empregado.matricula : ''}</dd>
+          <dt>
+            <Translate contentKey="oGestorApp.ausencia.empregado">Empregado</Translate>
+          </dt>
+          <dd>{ausenciaEntity.empregado ? ausenciaEntity.empregado.nome : ''}</dd>
           <dt>
             <span id="tipo">
               <Translate contentKey="oGestorApp.ausencia.tipo">Tipo</Translate>
@@ -49,10 +57,6 @@ export const AusenciaDetail = (props: IAusenciaDetailProps) => {
             </span>
           </dt>
           <dd>{ausenciaEntity.dataFim}</dd>
-          <dt>
-            <Translate contentKey="oGestorApp.ausencia.empregado">Empregado</Translate>
-          </dt>
-          <dd>{ausenciaEntity.empregado ? ausenciaEntity.empregado.nome : ''}</dd>
         </dl>
         <Button tag={Link} to="/ausencia" replace color="info">
           <FontAwesomeIcon icon="arrow-left" />{' '}

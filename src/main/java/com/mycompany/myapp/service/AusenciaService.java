@@ -1,5 +1,11 @@
 package com.mycompany.myapp.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+import com.mycompany.myapp.domain.Ausencia;
+import com.mycompany.myapp.repository.AusenciaRepository;
+
 import com.mycompany.myapp.domain.Ausencia;
 import com.mycompany.myapp.repository.AusenciaRepository;
 import org.slf4j.Logger;
@@ -14,17 +20,25 @@ import java.util.Optional;
 /**
  * Service Implementation for managing {@link Ausencia}.
  */
-@Service
-@Transactional
+@Component
 public class AusenciaService {
 
     private final Logger log = LoggerFactory.getLogger(AusenciaService.class);
 
-    private final AusenciaRepository ausenciaRepository;
+    @Autowired
+    public AusenciaRepository ausenciaRepository;
 
     public AusenciaService(AusenciaRepository ausenciaRepository) {
         this.ausenciaRepository = ausenciaRepository;
     }
+    
+	public List<Ausencia> findAllAusenciaWithEmpregadoProjetos() {
+		return ausenciaRepository.findAllWithEagerRelationships();
+	}
+
+	public List<Ausencia> findAllAusenciaWithEmpregadoProjetosByProjeto(Long idProjeto) {
+		return ausenciaRepository.findAllWithEagerRelationshipsByIdProjeto(idProjeto);
+	}
 
     /**
      * Save a ausencia.

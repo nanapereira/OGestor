@@ -56,6 +56,9 @@ export const Ausencia = (props: IAusenciaProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.ausencia.dataFim">Data Fim</Translate>
                 </th>
+                <th>
+                  <Translate contentKey="oGestorApp.ausencia.emp.projetos">Projetos</Translate>
+                </th>
                 <th />
               </tr>
             </thead>
@@ -75,6 +78,16 @@ export const Ausencia = (props: IAusenciaProps) => {
                   <td>{ausencia.descricao}</td>
                   <td><TextFormat type="date" value={ausencia.dataInicio} format={APP_LOCAL_DATE_FORMAT} /></td>
                   <td><TextFormat type="date" value={ausencia.dataFim} format={APP_LOCAL_DATE_FORMAT} /></td>
+                  <td>
+                    {ausencia.empregado.projetos
+                      ? ausencia.empregado.projetos.map((val, j) => (
+                        <span key={j}>
+                          <Link to={`projeto/${val.id}`}>{val.nome}</Link>
+                          {j === ausencia.empregado.projetos.length - 1 ? '' : ', '}
+                        </span>
+                      ))
+                      : null}
+                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${ausencia.id}`} color="info" size="sm">

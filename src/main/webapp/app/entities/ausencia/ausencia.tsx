@@ -9,8 +9,11 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './ausencia.reducer';
 import { IAusencia } from 'app/shared/model/ausencia.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import { Projeto } from '../projeto/projeto';
+import projeto, { Projeto } from '../projeto/projeto';
 import empregado from '../empregado/empregado';
+import { Empregado } from '../empregado/empregado';
+import { AvInput } from 'availity-reactstrap-validation';
+import Entities from 'app/entities';
 
 export interface IAusenciaProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> { }
 
@@ -19,7 +22,7 @@ export const Ausencia = (props: IAusenciaProps) => {
     props.getEntities();
   }, []);
 
-  const { ausenciaList, match, loading } = props;
+  const { ausenciaList, projetoList, match, loading } = props;
   return (
     <div>
       <h2 id="ausencia-heading">
@@ -59,10 +62,9 @@ export const Ausencia = (props: IAusenciaProps) => {
                 <th>
                   <div className="input-group">
                     <select className="custom-select" id="inputGroupSelect04">
-                      <option selected>Selecione...</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      {projetoList.map((projeto, k) => (
+                        <option key={`entity-${k}`}>{projeto.nome}</option>
+                      ))}
                     </select>
                     <div className="input-group-append">
                       <button className="btn btn-outline-secondary" type="button">Buscar</button>
@@ -134,10 +136,12 @@ export const Ausencia = (props: IAusenciaProps) => {
   );
 };
 
-const mapStateToProps = ({ ausencia }: IRootState) => ({
+const mapStateToProps = ({ ausencia, projeto }: IRootState) => ({
   ausenciaList: ausencia.entities,
+  projetoList: projeto.entities,
   loading: ausencia.loading
 });
+
 
 const mapDispatchToProps = {
   getEntities

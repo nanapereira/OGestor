@@ -62,6 +62,7 @@ export const Ausencia = (props: IAusenciaProps) => {
                 <th>
                   <div className="input-group">
                     <select className="custom-select" id="inputGroupSelect04">
+                      <option selected>Selecione...</option>
                       {projetoList.map((projeto, k) => (
                         <option key={`entity-${k}`}>{projeto.nome}</option>
                       ))}

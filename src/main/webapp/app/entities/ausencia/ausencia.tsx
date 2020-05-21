@@ -14,15 +14,23 @@ import empregado from '../empregado/empregado';
 import { Empregado } from '../empregado/empregado';
 import { AvInput } from 'availity-reactstrap-validation';
 import Entities from 'app/entities';
+import { getEntity, updateEntity, createEntity, reset } from './ausencia.reducer';
 
 export interface IAusenciaProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> { }
 
 export const Ausencia = (props: IAusenciaProps) => {
+
+  let buscarProjeto = () => {
+    console.log('AAAAAAAAAA')
+  };
+
   useEffect(() => {
     props.getEntities();
   }, []);
 
   const { ausenciaList, projetoList, match, loading } = props;
+
+
   return (
     <div>
       <h2 id="ausencia-heading">
@@ -68,7 +76,8 @@ export const Ausencia = (props: IAusenciaProps) => {
                       ))}
                     </select>
                     <div className="input-group-append">
-                      <button className="btn btn-outline-secondary" type="button">Buscar</button>
+                      <button onClick={buscarProjeto} className="btn-outline-primary btn-sm" type="button">Buscar
+                      </button>
                     </div>
                   </div>
                   <Translate contentKey="oGestorApp.ausencia.emp.projetos">Projetos</Translate>

@@ -20,16 +20,16 @@ export interface IAusenciaProps extends StateProps, DispatchProps, RouteComponen
 
 export const Ausencia = (props: IAusenciaProps) => {
 
+  const { ausenciaList, projetoList, match, loading } = props;
+
   let buscarProjeto = () => {
-    console.log('AAAAAAAAAA')
+    var listaCombobyId = document.getElementById("inputGroupSelect04");
+    console.log(listaCombobyId);
   };
 
   useEffect(() => {
     props.getEntities();
   }, []);
-
-  const { ausenciaList, projetoList, match, loading } = props;
-
 
   return (
     <div>
@@ -72,13 +72,13 @@ export const Ausencia = (props: IAusenciaProps) => {
                     <select className="custom-select" id="inputGroupSelect04">
                       <option selected>Selecione...</option>
                       {projetoList.map((projeto, k) => (
-                        <option key={`entity-${k}`}>{projeto.nome}</option>
+                        <option value={projeto.id}>{projeto.nome}</option>
                       ))}
                     </select>
-                    <div className="input-group-append">
-                      <button onClick={buscarProjeto} className="btn-outline-primary btn-sm" type="button">Buscar
+                    <label className="input-group-append">
+                      <button className="btn-primary" type="button" onClick={buscarProjeto}>Buscar
                       </button>
-                    </div>
+                    </label>
                   </div>
                   <Translate contentKey="oGestorApp.ausencia.emp.projetos">Projetos</Translate>
                 </th>

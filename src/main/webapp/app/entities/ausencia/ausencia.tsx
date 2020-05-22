@@ -75,13 +75,14 @@ export const Ausencia = (props: IAusenciaProps) => {
                         <option value={projeto.id}>{projeto.nome}</option>
                       ))}
                     </select>
-                    <label className="input-group-append">
+                    <div className="input-group-append">
                       <button className="btn-primary" type="button" onClick={buscarProjeto}>Buscar
                       </button>
-                    </label>
+                    </div>
                   </div>
                   <Translate contentKey="oGestorApp.ausencia.emp.projetos">Projetos</Translate>
                 </th>
+                <th></th>
                 <th />
               </tr>
             </thead>

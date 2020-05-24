@@ -15,7 +15,6 @@ import { Empregado } from '../empregado/empregado';
 import { AvInput } from 'availity-reactstrap-validation';
 import Entities from 'app/entities';
 import { getEntity, updateEntity, createEntity, reset } from './ausencia.reducer';
-
 export interface IAusenciaProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> { }
 
 export const Ausencia = (props: IAusenciaProps) => {
@@ -23,8 +22,8 @@ export const Ausencia = (props: IAusenciaProps) => {
   const { ausenciaList, projetoList, match, loading } = props;
 
   let buscarProjeto = () => {
-    var listaCombobyId = document.getElementById("inputGroupSelect04");
-    console.log(listaCombobyId);
+    var idProjeto = (document.getElementById("inputGroupSelect04")) as HTMLSelectElement;
+    console.log('id:', idProjeto.selectedIndex);
   };
 
   useEffect(() => {
@@ -69,8 +68,7 @@ export const Ausencia = (props: IAusenciaProps) => {
                 </th>
                 <th>
                   <div className="input-group">
-                    <select className="custom-select" id="inputGroupSelect04">
-                      <option selected>Selecione...</option>
+                    <select className="custom-select" id="inputGroupSelect04" defaultValue="Selecione...">
                       {projetoList.map((projeto, k) => (
                         <option value={projeto.id}>{projeto.nome}</option>
                       ))}
@@ -152,7 +150,6 @@ const mapStateToProps = ({ ausencia, projeto }: IRootState) => ({
   projetoList: projeto.entities,
   loading: ausencia.loading
 });
-
 
 const mapDispatchToProps = {
   getEntities

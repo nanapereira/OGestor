@@ -17,6 +17,7 @@ import Entities from 'app/entities';
 import { getEntity, updateEntity, createEntity, reset } from './ausencia.reducer';
 import axios from 'axios';
 import { ICrudGetAction } from 'react-jhipster';
+import DocsPage from '../../modules/administration/docs/docs';
 
 export interface IAusenciaProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> { }
 
@@ -24,17 +25,19 @@ export const Ausencia = (props: IAusenciaProps) => {
 
   const { ausenciaList, projetoList, match, loading } = props;
 
-  let getProjetoById = () => {
+  let getProjetoById = async () => {
     const apiUrl = 'api/ausencias/projeto';
     var listaCombo = (document.getElementById("inputGroupSelect04")) as HTMLSelectElement;
     var idProjeto = listaCombo.selectedIndex;
+
     if (idProjeto > 0) {
       const requestUrl = `${apiUrl}/${idProjeto}`;
-      var retornoFiltro = axios.get<IAusencia>(requestUrl)
-      console.log(retornoFiltro);
+      var retornoFiltro = await axios.get<IAusencia>(requestUrl)
+      console.log(retornoFiltro.data);
     } else {
       console.log('Esse projeto não tem Ausências!');
     }
+
   };
 
   useEffect(() => {
@@ -79,16 +82,16 @@ export const Ausencia = (props: IAusenciaProps) => {
                 </th>
                 <th>
                   <div className="input-group">
-                    <select className="custom-select" id="inputGroupSelect04" onClick={getProjetoById}>
+                    <select className="custom-select" id="inputGroupSelect04">
                       <option selected>Selecione...</option>
                       {projetoList.map((projeto, k) => (
                         <option value={projeto.id}>{projeto.nome}</option>
                       ))}
                     </select>
-                    {/*<div className="input-group-append">
+                    <div className="input-group-append">
                       <button className="btn-primary" type="button" onClick={getProjetoById}>Buscar
                       </button>
-                      </div>*/}
+                    </div>
                   </div>
                   <Translate contentKey="oGestorApp.ausencia.emp.projetos">Projetos</Translate>
                 </th>

@@ -29,7 +29,6 @@ export const Ausencia = (props: IAusenciaProps) => {
     const apiUrl = 'api/ausencias/projeto';
     var listaCombo = (document.getElementById("inputGroupSelect04")) as HTMLSelectElement;
     var idProjeto = listaCombo.selectedIndex;
-
     if (idProjeto > 0) {
       const requestUrl = `${apiUrl}/${idProjeto}`;
       var retornoFiltro = await axios.get<IAusencia>(requestUrl)
@@ -37,7 +36,6 @@ export const Ausencia = (props: IAusenciaProps) => {
     } else {
       console.log('Esse projeto não tem Ausências!');
     }
-
   };
 
   useEffect(() => {

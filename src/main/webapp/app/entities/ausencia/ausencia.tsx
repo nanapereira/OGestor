@@ -18,6 +18,7 @@ import { getEntity, updateEntity, createEntity, reset } from './ausencia.reducer
 import axios from 'axios';
 import { ICrudGetAction } from 'react-jhipster';
 import DocsPage from '../../modules/administration/docs/docs';
+import { IProjeto } from '../../shared/model/projeto.model';
 
 export interface IAusenciaProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> { }
 
@@ -31,7 +32,7 @@ export const Ausencia = (props: IAusenciaProps) => {
     var idProjeto = listaCombo.selectedIndex;
     if (idProjeto > 0) {
       const requestUrl = `${apiUrl}/${idProjeto}`;
-      var retornoFiltro = await axios.get<IAusencia>(requestUrl)
+      var retornoFiltro = await axios.get<IProjeto>(requestUrl)
       console.log(retornoFiltro.data);
     } else {
       console.log('Esse projeto não tem Ausências!');

@@ -87,7 +87,7 @@ export const Ausencia = (props: IAusenciaProps) => {
                       ))}
                     </select>
                     <div className="input-group-append">
-                      <button className="btn-primary btn-sm"  type="button" onClick={getProjetoById}>Buscar
+                      <button className="btn-primary btn-sm" type="button" onClick={getProjetoById}><FontAwesomeIcon icon="search" />{' '}
                       </button>
                     </div>
                   </div>

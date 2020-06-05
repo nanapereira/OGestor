@@ -24,20 +24,7 @@ export interface IAusenciaProps extends StateProps, DispatchProps, RouteComponen
 
 export const Ausencia = (props: IAusenciaProps) => {
 
-  const { ausenciaList, projetoList, match, loading } = props;
-
-  let getProjetoById = async () => {
-    const apiUrl = 'api/ausencias/projeto';
-    var listaCombo = (document.getElementById("inputGroupSelect04")) as HTMLSelectElement;
-    var idProjeto = listaCombo.selectedIndex;
-    if (idProjeto > 0) {
-      const requestUrl = `${apiUrl}/${idProjeto}`;
-      var retornoFiltro = await axios.get<IProjeto>(requestUrl)
-      console.log(retornoFiltro.data);
-    } else {
-      console.log('Esse projeto não tem Ausências!');
-    }
-  };
+  const { ausenciaList, match, loading } = props;
 
   useEffect(() => {
     props.getEntities();
@@ -80,18 +67,6 @@ export const Ausencia = (props: IAusenciaProps) => {
                   <Translate contentKey="oGestorApp.ausencia.dataFim">Data Fim</Translate>
                 </th>
                 <th>
-                  <div className="input-group">
-                    <select className="custom-select" id="inputGroupSelect04">
-                      <option selected>Selecione...</option>
-                      {projetoList.map((projeto, k) => (
-                        <option value={projeto.id}>{projeto.nome}</option>
-                      ))}
-                    </select>
-                    <div className="input-group-append">
-                      <button className="btn-primary btn-sm" type="button" onClick={getProjetoById}><FontAwesomeIcon icon="search" />{' '}
-                      </button>
-                    </div>
-                  </div>
                   <Translate contentKey="oGestorApp.ausencia.emp.projetos">Projetos</Translate>
                 </th>
                 <th />
@@ -158,9 +133,9 @@ export const Ausencia = (props: IAusenciaProps) => {
   );
 };
 
-const mapStateToProps = ({ ausencia, projeto }: IRootState) => ({
+// eslint-disable-next-line no-shadow
+const mapStateToProps = ({ ausencia }: IRootState) => ({
   ausenciaList: ausencia.entities,
-  projetoList: projeto.entities,
   loading: ausencia.loading
 });
 

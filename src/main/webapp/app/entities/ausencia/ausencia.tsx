@@ -9,7 +9,6 @@ import { IRootState } from 'app/shared/reducers';
 import { getEntities } from './ausencia.reducer';
 import { IAusencia } from 'app/shared/model/ausencia.model';
 import { APP_DATE_FORMAT, APP_LOCAL_DATE_FORMAT } from 'app/config/constants';
-import projeto, { Projeto } from '../projeto/projeto';
 import empregado from '../empregado/empregado';
 import { Empregado } from '../empregado/empregado';
 import { AvInput } from 'availity-reactstrap-validation';
@@ -18,7 +17,6 @@ import { getEntity, updateEntity, createEntity, reset } from './ausencia.reducer
 import axios from 'axios';
 import { ICrudGetAction } from 'react-jhipster';
 import DocsPage from '../../modules/administration/docs/docs';
-import { IProjeto } from '../../shared/model/projeto.model';
 
 export interface IAusenciaProps extends StateProps, DispatchProps, RouteComponentProps<{ url: string }> { }
 
@@ -66,10 +64,7 @@ export const Ausencia = (props: IAusenciaProps) => {
                 <th>
                   <Translate contentKey="oGestorApp.ausencia.dataFim">Data Fim</Translate>
                 </th>
-                <th>
-                  <Translate contentKey="oGestorApp.ausencia.emp.projetos">Projetos</Translate>
-                </th>
-                <th />
+                  <th />
               </tr>
             </thead>
             <tbody>
@@ -88,16 +83,6 @@ export const Ausencia = (props: IAusenciaProps) => {
                   <td>{ausencia.descricao}</td>
                   <td><TextFormat type="date" value={ausencia.dataInicio} format={APP_LOCAL_DATE_FORMAT} /></td>
                   <td><TextFormat type="date" value={ausencia.dataFim} format={APP_LOCAL_DATE_FORMAT} /></td>
-                  <td>
-                    {ausencia.empregado.projetos
-                      ? ausencia.empregado.projetos.map((val, j) => (
-                        <span key={j}>
-                          <Link to={`projeto/${val.id}`}>{val.nome}</Link>
-                          {j === ausencia.empregado.projetos.length - 1 ? '' : ', '}
-                        </span>
-                      ))
-                      : null}
-                  </td>
                   <td className="text-right">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${ausencia.id}`} color="info" size="sm">
